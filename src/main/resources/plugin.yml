@@ -1,0 +1,7 @@
+name: PFShop
+version: '${project.version}'
+main: de.davideinenkel.pfshop.Pfshop
+api-version: 1.19
+commands:
+  shop:
+    description: Hehehe du Huan
