@@ -2,6 +2,7 @@ package de.davideinenkel.pfshop.commands;
 
 import de.davideinenkel.pfshop.ExampleGui;
 import de.davideinenkel.pfshop.utility.PlayerHead;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,11 +27,11 @@ public class GetMenuCommand implements CommandExecutor {
 
 
 
-            meta.setDisplayName("Menu");
+            meta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Menü " + ChatColor.RESET + "" + ChatColor.DARK_GRAY + "[Rechtsklick]");
 
 
             String lore;
-            lore = "Fick mich";
+            lore = ChatColor.GRAY + "Menü mit Rechtsklick öffnen";
 
             meta.setOwningPlayer(player);
 

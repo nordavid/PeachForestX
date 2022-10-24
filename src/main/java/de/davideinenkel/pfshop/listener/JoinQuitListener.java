@@ -2,6 +2,7 @@ package de.davideinenkel.pfshop.listener;
 
 import de.davideinenkel.pfshop.utility.PlayerConfig;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,9 +25,9 @@ public class JoinQuitListener implements Listener {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime lastDateTime = LocalDateTime.parse(lastTimeOn, formatter);
 
-        long minutes = ChronoUnit.SECONDS.between(lastDateTime, current);
+        long hours = ChronoUnit.HOURS.between(lastDateTime, current);
 
-        event.setJoinMessage("Der Huan " + event.getPlayer().getDisplayName() + " hat das Spiel betreten [Letztes mal online vor: " + minutes + "]");
+        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + event.getPlayer().getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
 
         UUID nordavid = UUID.fromString("9b8c95b6-3168-48d9-b565-8216d78c05ff");
         if(event.getPlayer().getUniqueId().equals(nordavid)) {
