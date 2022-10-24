@@ -2,9 +2,11 @@ package de.davideinenkel.pfshop;
 
 import de.davideinenkel.pfshop.utility.PlayerConfig;
 import de.davideinenkel.pfshop.utility.PlayerHead;
+import de.davideinenkel.pfshop.utility.Rewards;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,12 +23,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import static org.bukkit.Bukkit.getServer;
 
 public class ExampleGui implements Listener {
-    private final Inventory inv;
+    private Inventory inv;
     private final Player p;
     private Integer balance;
 
@@ -43,6 +46,18 @@ public class ExampleGui implements Listener {
 
     }
 
+    public void updateGui() {
+        p.closeInventory();
+        PlayerConfig.load(p);
+        Integer bal = PlayerConfig.get().getInt("balance");
+        balance = bal;
+        inv = Bukkit.createInventory(null, 9, "Guthaben: §l" + bal + "P");
+
+        // Put the items into the inventory
+        initializeItems();
+        openInventory(p);
+    }
+
     // You can call this whenever you want to put the items in
     public void initializeItems() {
 
@@ -51,8 +66,8 @@ public class ExampleGui implements Listener {
         ItemStack shop = PlayerHead.getPlayerHead("https://textures.minecraft.net/texture/34ccb52750e97e830aebfa8a21d5da0d364d0fdad9fb0cc220fe2ca8411842c3");
 
         peach = addMetaToItem(peach, ChatColor.GOLD + "" + ChatColor.BOLD + "Peaches", "§fDu Drecksau hast " + balance + " Peaches");
-        reward = addMetaToItem(reward, "§a§bReward abholen", "§fHol Dir dein daily reward ab Du Huan");
-        shop = addMetaToItem(shop, "§c§bShop", "§fHol Dir doch was feines lul");
+        reward = addMetaToItem(reward, ChatColor.GREEN + "" + ChatColor.BOLD + "Reward abholen", "§fHol Dir dein daily reward ab Du Huan" , "§d" + Rewards.getRewardString(p));
+        shop = addMetaToItem(shop,ChatColor.RED + "" + ChatColor.BOLD + "Shop", "§fHol Dir doch was feines lul");
 
         inv.setItem(0, peach);
         inv.setItem(4, reward);
@@ -124,13 +139,21 @@ public class ExampleGui implements Listener {
             final Player p = (Player) e.getWhoClicked();
 
             // Using slots click is a best option for your inventory click's
-            p.sendMessage("You clicked at slot " + e.getRawSlot());
+            //p.sendMessage("You clicked at slot " + e.getRawSlot());
 
             if(e.getRawSlot() == 4) {
-               LocalDateTime dateTime = (LocalDateTime) PlayerConfig.get().get("lastReward");
-                if(dateTime != null) {
-                    p.sendMessage("xd");
-                }
+               if (Rewards.getIsRewardReady(p)) {
+                   PlayerConfig.load(p);
+                   PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") + 300);
+                   PlayerConfig.get().set("lastReward", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                   PlayerConfig.save();
+                   p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 10, 1);
+                   p.sendMessage("Reward erhalten");
+                   updateGui();
+               }
+               else {
+                   p.sendMessage("Nee nee");
+               }
             }
         }
     }
