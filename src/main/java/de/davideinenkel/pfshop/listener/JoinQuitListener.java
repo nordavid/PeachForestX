@@ -1,8 +1,10 @@
 package de.davideinenkel.pfshop.listener;
 
+import de.davideinenkel.pfshop.utility.MenuItem;
 import de.davideinenkel.pfshop.utility.PlayerConfig;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,7 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class JoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PlayerConfig.create(event.getPlayer());
+        Player player = event.getPlayer();
+        PlayerConfig.create(player);
 
         LocalDateTime current = LocalDateTime.now();
 
@@ -27,7 +30,9 @@ public class JoinQuitListener implements Listener {
 
         long hours = ChronoUnit.HOURS.between(lastDateTime, current);
 
-        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + event.getPlayer().getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
+        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
+
+        player.getInventory().setItem(8, MenuItem.getMenuItem(player));
 
         UUID nordavid = UUID.fromString("9b8c95b6-3168-48d9-b565-8216d78c05ff");
         if(event.getPlayer().getUniqueId().equals(nordavid)) {
