@@ -1,7 +1,7 @@
 package de.davideinenkel.pfshop;
 
 import de.davideinenkel.pfshop.utility.PlayerConfig;
-import de.davideinenkel.pfshop.utility.PlayerHead;
+import de.davideinenkel.pfshop.utility.CustomHead;
 import de.davideinenkel.pfshop.utility.Rewards;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -61,9 +61,9 @@ public class ExampleGui implements Listener {
     // You can call this whenever you want to put the items in
     public void initializeItems() {
 
-        ItemStack peach = PlayerHead.getPlayerHead("https://textures.minecraft.net/texture/16b4d27bc1b466e3ab4123cbe241974a813573a7c36c5e5b8daf9c85a5ce0");
-        ItemStack reward = PlayerHead.getPlayerHead("https://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6");
-        ItemStack shop = PlayerHead.getPlayerHead("https://textures.minecraft.net/texture/34ccb52750e97e830aebfa8a21d5da0d364d0fdad9fb0cc220fe2ca8411842c3");
+        ItemStack peach = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/16b4d27bc1b466e3ab4123cbe241974a813573a7c36c5e5b8daf9c85a5ce0");
+        ItemStack reward = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6");
+        ItemStack shop = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/34ccb52750e97e830aebfa8a21d5da0d364d0fdad9fb0cc220fe2ca8411842c3");
 
         peach = addMetaToItem(peach, ChatColor.GOLD + "" + ChatColor.BOLD + "Peaches", "§fDu Drecksau hast " + balance + " Peaches");
         reward = addMetaToItem(reward, ChatColor.GREEN + "" + ChatColor.BOLD + "Reward abholen", "§fHol Dir dein daily reward ab Du Huan" , "§d" + Rewards.getRewardString(p));
