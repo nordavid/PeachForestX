@@ -4,6 +4,7 @@ import de.davideinenkel.peachforestx.commands.GetMenuCommand;
 import de.davideinenkel.peachforestx.commands.OpenShopCommand;
 import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
+import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class PeachForestX extends JavaPlugin {
         getCommand("setup").setExecutor(new GetMenuCommand());
         getServer().getPluginManager().registerEvents(new JoinQuitListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
     }
 
     @Override

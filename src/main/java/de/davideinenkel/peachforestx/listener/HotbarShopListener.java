@@ -1,5 +1,6 @@
 package de.davideinenkel.peachforestx.listener;
 
+import com.google.common.eventbus.DeadEvent;
 import de.davideinenkel.peachforestx.ExampleGui;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import org.bukkit.Material;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -17,8 +19,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class HotbarShopListener implements Listener {
 
     @EventHandler
-    public void onRespawn(PlayerRespawnEvent e) {
-        Player player = e.getPlayer();
+    public void onRespawn(PlayerDeathEvent e) {
+        Player player = e.getEntity();
         player.getInventory().setItem(8, MenuItem.getMenuItem(player));
     }
 
