@@ -1,11 +1,10 @@
-package de.davideinenkel.pfshop.utility;
+package de.davideinenkel.peachforestx.utility;
 
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Rewards {
 

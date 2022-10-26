@@ -1,6 +1,6 @@
-name: PFShop
+name: PeachForestX
 version: '${project.version}'
-main: de.davideinenkel.pfshop.Pfshop
+main: de.davideinenkel.peachforestx.PeachForestX
 api-version: 1.19
 commands:
   shop:
