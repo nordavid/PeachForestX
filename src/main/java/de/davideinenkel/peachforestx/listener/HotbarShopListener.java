@@ -1,28 +1,25 @@
 package de.davideinenkel.peachforestx.listener;
 
-import com.google.common.eventbus.DeadEvent;
 import de.davideinenkel.peachforestx.ExampleGui;
+import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public class HotbarShopListener implements Listener {
-
-    @EventHandler
-    public void onRespawn(PlayerDeathEvent e) {
-        Player player = e.getEntity();
-        player.getInventory().setItem(8, MenuItem.getMenuItem(player));
-    }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
@@ -30,11 +27,30 @@ public class HotbarShopListener implements Listener {
         if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if(p.getInventory().getItemInMainHand().getType() == Material.PLAYER_HEAD) {
                 if (p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Menü") && p.getInventory().getHeldItemSlot() == 8) {
+                    e.setCancelled(true);
                     ExampleGui gui = new ExampleGui(p);
                     gui.openInventory(p);
+                    return;
                     //p.setVelocity(new Vector(0, 64, 0));
                 }
             }
+        }
+
+        if(!(e.hasBlock())) return;
+        if(!(e.getClickedBlock().getState() instanceof TileState)) return;
+        TileState state = (TileState) e.getClickedBlock().getState();
+        PersistentDataContainer container = state.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(PeachForestX.getInstance(), "death-chest");
+
+        if(!container.has(key, PersistentDataType.STRING)) return;
+
+        //container.get(key, PersistentDataType.STRING, "death-chest");
+        if(e.getPlayer().getUniqueId().toString().equalsIgnoreCase(
+                container.get(key, PersistentDataType.STRING)
+        )) return;
+        else {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage("neeeeee");
         }
     }
 
