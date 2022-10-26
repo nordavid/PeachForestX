@@ -1,8 +1,8 @@
-package de.davideinenkel.pfshop;
+package de.davideinenkel.peachforestx;
 
-import de.davideinenkel.pfshop.utility.PlayerConfig;
-import de.davideinenkel.pfshop.utility.CustomHead;
-import de.davideinenkel.pfshop.utility.Rewards;
+import de.davideinenkel.peachforestx.utility.PlayerConfig;
+import de.davideinenkel.peachforestx.utility.CustomHead;
+import de.davideinenkel.peachforestx.utility.Rewards;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,14 +10,12 @@ import org.bukkit.Sound;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -114,7 +112,7 @@ public class ExampleGui implements Listener {
     // You can open the inventory with this
     public void openInventory(final HumanEntity ent) {
         ent.openInventory(inv);
-        getServer().getPluginManager().registerEvents(this, Pfshop.getInstance());
+        getServer().getPluginManager().registerEvents(this, PeachForestX.getInstance());
     }
 
     // Check for clicks on items

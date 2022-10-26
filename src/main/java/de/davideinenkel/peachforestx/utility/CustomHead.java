@@ -1,4 +1,4 @@
-package de.davideinenkel.pfshop.utility;
+package de.davideinenkel.peachforestx.utility;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

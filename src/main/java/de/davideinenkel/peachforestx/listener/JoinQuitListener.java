@@ -1,7 +1,7 @@
-package de.davideinenkel.pfshop.listener;
+package de.davideinenkel.peachforestx.listener;
 
-import de.davideinenkel.pfshop.utility.MenuItem;
-import de.davideinenkel.pfshop.utility.PlayerConfig;
+import de.davideinenkel.peachforestx.utility.MenuItem;
+import de.davideinenkel.peachforestx.utility.PlayerConfig;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class JoinQuitListener implements Listener {
     @EventHandler

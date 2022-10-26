@@ -1,6 +1,6 @@
-package de.davideinenkel.pfshop.utility;
+package de.davideinenkel.peachforestx.utility;
 
-import de.davideinenkel.pfshop.Pfshop;
+import de.davideinenkel.peachforestx.PeachForestX;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,7 +13,7 @@ public class PlayerConfig {
     private static String subFolderName = "PlayerData";
     static File cfile;
     static FileConfiguration config;
-    static File df = Pfshop.getInstance().getDataFolder();
+    static File df = PeachForestX.getInstance().getDataFolder();
     static File folder = new File(df, subFolderName + File.separator);
 
     public static void create(Player p) {
