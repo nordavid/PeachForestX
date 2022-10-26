@@ -2,6 +2,7 @@ package de.davideinenkel.peachforestx;
 
 import de.davideinenkel.peachforestx.commands.GetMenuCommand;
 import de.davideinenkel.peachforestx.commands.OpenShopCommand;
+import de.davideinenkel.peachforestx.listener.DeathRespawnListener;
 import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
 import de.davideinenkel.peachforestx.listener.MenuListener;
@@ -24,6 +25,7 @@ public final class PeachForestX extends JavaPlugin {
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
         getServer().getPluginManager().registerEvents(new JoinQuitListener(), this);
+        getServer().getPluginManager().registerEvents(new DeathRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
     }
