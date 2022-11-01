@@ -24,14 +24,21 @@ public class JoinQuitListener implements Listener {
         LocalDateTime current = LocalDateTime.now();
 
         String lastTimeOn = PlayerConfig.get().getString("lastTimeOnline");
+
+        player.getInventory().setItem(8, MenuItem.getMenuItem(player));
+
+        if(lastTimeOn == null) {
+            // first join
+            event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da. Bitte geh nie wieder");
+            return;
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime lastDateTime = LocalDateTime.parse(lastTimeOn, formatter);
 
         long hours = ChronoUnit.HOURS.between(lastDateTime, current);
 
         event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
-
-        player.getInventory().setItem(8, MenuItem.getMenuItem(player));
 
         UUID nordavid = UUID.fromString("9b8c95b6-3168-48d9-b565-8216d78c05ff");
         if(event.getPlayer().getUniqueId().equals(nordavid)) {
