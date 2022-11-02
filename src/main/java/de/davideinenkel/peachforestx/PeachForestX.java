@@ -7,12 +7,16 @@ import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
 import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
 public final class PeachForestX extends JavaPlugin {
+
+    private static FileConfiguration config;
+
     private static JavaPlugin instance = null;
 
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
@@ -23,6 +27,7 @@ public final class PeachForestX extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
+        config = getConfig();
 
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
@@ -56,5 +61,9 @@ public final class PeachForestX extends JavaPlugin {
 
     public static JavaPlugin getInstance() {
         return instance;
+    }
+
+    public static FileConfiguration getMainConfig() {
+        return config;
     }
 }

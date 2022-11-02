@@ -1,1 +1,20 @@
-shop:
+Reward: 300
+RewardCooldownHours: 3
+Shop:
+  Items:
+    kokaina:
+      name: "Feinstes Koks"
+      type: SUGAR
+      lore:
+        - "Erste line"
+        - "Zweite line"
+      amount: 24
+      cost: 20
+    holz:
+      name: "Feinstes Holz"
+      type: SUGAR
+      lore:
+        - "Erste xd"
+        - "Zweite dx"
+      amount: 1
+      cost: 4

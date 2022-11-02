@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 /*
     Defines the behavior and attributes of all menus in our plugin
@@ -76,6 +77,17 @@ public abstract class Menu implements InventoryHolder {
 
         itemMeta.setLore(Arrays.asList(lore));
         item.setItemMeta(itemMeta);
+
+        return item;
+    }
+
+    public  ItemStack addMetaToItem(final ItemStack is, final String name, final String... lore) {
+        final ItemStack item = is;
+        final ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(name);
+        meta.setLore(Arrays.asList(lore));
+        item.setItemMeta(meta);
 
         return item;
     }

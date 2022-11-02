@@ -1,5 +1,7 @@
 package de.davideinenkel.peachforestx;
 
+import de.davideinenkel.peachforestx.menusystem.menus.KillPlayerMenu;
+import de.davideinenkel.peachforestx.menusystem.menus.ShopMenu;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import de.davideinenkel.peachforestx.utility.CustomHead;
 import de.davideinenkel.peachforestx.utility.Rewards;
@@ -71,12 +73,12 @@ public class ExampleGui implements Listener {
         inv.setItem(4, reward);
         inv.setItem(8, shop);
 
-        inv.setItem(1, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
-        inv.setItem(2, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
-        inv.setItem(3, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
-        inv.setItem(5, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
-        inv.setItem(6, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
-        inv.setItem(7, createGuiItem(Material.BLACK_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(1, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(2, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(3, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(5, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(6, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
+        inv.setItem(7, createGuiItem(Material.GRAY_STAINED_GLASS_PANE, "", ""));
         //inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
     }
 
@@ -152,6 +154,8 @@ public class ExampleGui implements Listener {
                else {
                    p.sendMessage("Nee nee");
                }
+            } else if (e.getRawSlot() == 8) {
+                new ShopMenu(PeachForestX.getPlayerMenuUtility(p)).open();
             }
         }
     }
