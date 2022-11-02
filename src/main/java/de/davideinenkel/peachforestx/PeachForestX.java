@@ -22,6 +22,8 @@ public final class PeachForestX extends JavaPlugin {
         // Plugin startup logic
         instance = this;
 
+        saveDefaultConfig();
+
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
         getServer().getPluginManager().registerEvents(new JoinQuitListener(), this);
