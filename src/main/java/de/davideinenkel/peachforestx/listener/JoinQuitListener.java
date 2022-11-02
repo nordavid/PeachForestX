@@ -38,12 +38,12 @@ public class JoinQuitListener implements Listener {
 
         long hours = ChronoUnit.HOURS.between(lastDateTime, current);
 
-        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
-
-        UUID nordavid = UUID.fromString("9b8c95b6-3168-48d9-b565-8216d78c05ff");
-        if(event.getPlayer().getUniqueId().equals(nordavid)) {
-            //event.setJoinMessage("");
+        if(hours == 0) {
+            event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da");
+            return;
         }
+
+        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
     }
 
     @EventHandler
@@ -53,6 +53,8 @@ public class JoinQuitListener implements Listener {
         PlayerConfig.load(event.getPlayer());
         PlayerConfig.get().set("lastTimeOnline", currentDateTime);
         PlayerConfig.save();
+
+        //-----
 
         UUID nordavid = UUID.fromString("9b8c95b6-3168-48d9-b565-8216d78c05ff");
         if(event.getPlayer().getUniqueId().equals(nordavid)) {
