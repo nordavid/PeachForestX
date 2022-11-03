@@ -1,7 +1,9 @@
 package de.davideinenkel.peachforestx;
 
 import de.davideinenkel.peachforestx.commands.GetMenuCommand;
+import de.davideinenkel.peachforestx.commands.ManipulateBalanceCommand;
 import de.davideinenkel.peachforestx.commands.OpenShopCommand;
+import de.davideinenkel.peachforestx.commands.TestCommand;
 import de.davideinenkel.peachforestx.listener.DeathRespawnListener;
 import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 
 public final class PeachForestX extends JavaPlugin {
 
+    //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
     private static FileConfiguration config;
 
     private static JavaPlugin instance = null;
@@ -29,8 +32,10 @@ public final class PeachForestX extends JavaPlugin {
         saveDefaultConfig();
         config = getConfig();
 
+        getCommand("test").setExecutor(new TestCommand());
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
+        getCommand("balance").setExecutor(new ManipulateBalanceCommand());
         getServer().getPluginManager().registerEvents(new JoinQuitListener(), this);
         getServer().getPluginManager().registerEvents(new DeathRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
