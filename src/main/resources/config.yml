@@ -3,18 +3,34 @@ RewardCooldownHours: 3
 Shop:
   Items:
     kokaina:
-      name: "Feinstes Koks"
+      name: §eFeinstes Koks
       type: SUGAR
       lore:
-        - "Erste line"
-        - "Zweite line"
-      amount: 24
-      cost: 20
-    holz:
-      name: "Feinstes Holz"
-      type: SUGAR
-      lore:
-        - "Erste xd"
-        - "Zweite dx"
+        - Erste line
+        - Zweite line
       amount: 1
-      cost: 4
+      cost: 200
+    fly:
+      name: §eFlügels AMK
+      type: ELYTRA
+      lore:
+        - Erste xd
+        - Zweite dx
+      amount: 1
+      cost: 1000
+    firework:
+      name: §eBooster
+      type: FIREWORK_ROCKET
+      lore:
+        - Erste line
+        - Zweite line
+      amount: 1
+      cost: 1
+    fireworkL:
+      name: §eBooster
+      type: FIREWORK_ROCKET
+      lore:
+        - Erste line
+        - Zweite line
+      amount: 64
+      cost: 64

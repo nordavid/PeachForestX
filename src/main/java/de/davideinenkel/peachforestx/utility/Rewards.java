@@ -1,5 +1,6 @@
 package de.davideinenkel.peachforestx.utility;
 
+import de.davideinenkel.peachforestx.PeachForestX;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -8,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Rewards {
 
-    final static int rewardCooldownInH = 3;
+    //final static int rewardCooldownInH = 3;
 
     public static String getRewardString(Player player) {
         boolean rewardReady = getIsRewardReady(player);
@@ -46,10 +47,18 @@ public class Rewards {
         LocalDateTime lastRewardDate = LocalDateTime.parse(lastReward, formatter);
 
         LocalDateTime current = LocalDateTime.now();
-        LocalDateTime nextRewardDate = lastRewardDate.plusHours(rewardCooldownInH);
+        LocalDateTime nextRewardDate = lastRewardDate.plusHours(PeachForestX.getMainConfig().getInt("RewardCooldownHours"));
         Duration remaining = Duration.between(current, nextRewardDate);
 
         return remaining.getSeconds();
+    }
+
+    public static boolean claimReward(Player player) {
+        PlayerConfig.load(player);
+        PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") + PeachForestX.getMainConfig().getInt("Reward"));
+        PlayerConfig.get().set("lastReward", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        PlayerConfig.save();
+        return true;
     }
 
 }

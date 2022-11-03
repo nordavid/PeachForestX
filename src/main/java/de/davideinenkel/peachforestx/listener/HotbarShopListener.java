@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -47,7 +48,22 @@ public class HotbarShopListener implements Listener {
         //container.get(key, PersistentDataType.STRING, "death-chest");
         if(e.getPlayer().getUniqueId().toString().equalsIgnoreCase(
                 container.get(key, PersistentDataType.STRING)
-        )) return;
+        )) {
+            e.getClickedBlock().setType(Material.AIR);
+            if(DeathRespawnListener.items.containsKey(e.getPlayer())){
+                //e.getPlayer().getInventory().clear();
+                for(ItemStack stack : DeathRespawnListener.items.get(e.getPlayer())){
+                    if(stack != null){
+                        if(stack.getType() != Material.PLAYER_HEAD) {
+                            e.getPlayer().getInventory().addItem(stack);
+                        }
+                    }
+                }
+
+                DeathRespawnListener.items.remove(e.getPlayer());
+            }
+            return;
+        }
         else {
             e.setCancelled(true);
             e.getPlayer().sendMessage("neeeeee");

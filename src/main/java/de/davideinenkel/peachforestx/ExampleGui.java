@@ -143,10 +143,7 @@ public class ExampleGui implements Listener {
 
             if(e.getRawSlot() == 4) {
                if (Rewards.getIsRewardReady(p)) {
-                   PlayerConfig.load(p);
-                   PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") + 300);
-                   PlayerConfig.get().set("lastReward", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
-                   PlayerConfig.save();
+                   Rewards.claimReward(p);
                    p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 10, 1);
                    p.sendMessage("Reward erhalten");
                    updateGui();

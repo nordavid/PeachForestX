@@ -2,6 +2,8 @@ package de.davideinenkel.peachforestx.listener;
 
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,13 +11,21 @@ import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 public class DeathRespawnListener implements Listener {
+
+    public static HashMap<Player , ItemStack[]> items = new HashMap<>();
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
@@ -30,7 +40,18 @@ public class DeathRespawnListener implements Listener {
 
         Player player = e.getEntity();
 
+        ItemStack[] content = e.getEntity().getInventory().getContents();
+        items.put(e.getEntity(), content);
+        e.getEntity().getInventory().clear();
+
+        // remove Menu on player death
+        //e.getDrops().remove(MenuItem.getMenuItem(player));
+        e.getDrops().clear();
+
         player.getWorld().getBlockAt(deathLoc).setType(Material.CHEST);
+
+        List<String> lines = Arrays.asList("1asdijf asdfju asdf aposidf");
+        Hologram hologram = DHAPI.createHologram("name", deathLoc.add(-0.5, 1.5, 0.5), lines);
 
         if(!(player.getWorld().getBlockAt(deathLoc).getType() == Material.CHEST)) return;
 
@@ -45,7 +66,7 @@ public class DeathRespawnListener implements Listener {
 
         state.update();
 
-        player.sendMessage("Todestruhe platziert [" + deathLoc.getX() + ", " + deathLoc.getY() + ", " + deathLoc.getZ() + "]");
+        player.sendMessage("Todestruhe platziert [" + Math.floor(deathLoc.getX()) + ", " + Math.floor(deathLoc.getY()) + ", " + Math.floor(deathLoc.getZ()) + "]");
 
     }
 }

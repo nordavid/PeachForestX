@@ -3,6 +3,10 @@ version: '${project.version}'
 main: de.davideinenkel.peachforestx.PeachForestX
 api-version: 1.19
 commands:
+  test:
+    description: Variable test command
+  balance:
+    description: Manipulate player balance
   shop:
     description: Hehehe du Huan
   setup:
