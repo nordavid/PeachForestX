@@ -9,13 +9,19 @@ import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
 import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class PeachForestX extends JavaPlugin {
+
+    public static ArrayList<Location> deathChests = new ArrayList<>();
 
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
     private static FileConfiguration config;
@@ -45,6 +51,9 @@ public final class PeachForestX extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        for (Location loc : deathChests) {
+            Bukkit.getWorld("ambient").getBlockAt(loc).setType(Material.AIR);
+        }
     }
 
     //Provide a player and return a menu system for that player

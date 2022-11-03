@@ -7,11 +7,9 @@ import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -36,7 +34,6 @@ public class DeathRespawnListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Location deathLoc = e.getEntity().getLocation();
-        deathLoc.add(0, 0, 0);
 
         Player player = e.getEntity();
 
@@ -50,8 +47,9 @@ public class DeathRespawnListener implements Listener {
 
         player.getWorld().getBlockAt(deathLoc).setType(Material.CHEST);
 
-        List<String> lines = Arrays.asList("1asdijf asdfju asdf aposidf");
-        Hologram hologram = DHAPI.createHologram("name", deathLoc.add(-0.5, 1.5, 0.5), lines);
+        Location chestLoc = player.getWorld().getBlockAt(deathLoc).getLocation();
+        String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
+        Location holoLoc = chestLoc.add(0.5, 1.5, 0.5);
 
         if(!(player.getWorld().getBlockAt(deathLoc).getType() == Material.CHEST)) return;
 
@@ -65,6 +63,12 @@ public class DeathRespawnListener implements Listener {
         container.set(key, PersistentDataType.STRING, player.getUniqueId().toString());
 
         state.update();
+
+        PeachForestX.deathChests.add(deathLoc);
+
+        //Set hologram
+        List<String> lines = Arrays.asList("§6" + player.getDisplayName() + "´s Todestruhe");
+        Hologram hologram = DHAPI.createHologram(deathHoloID, holoLoc, lines);
 
         player.sendMessage("Todestruhe platziert [" + Math.floor(deathLoc.getX()) + ", " + Math.floor(deathLoc.getY()) + ", " + Math.floor(deathLoc.getZ()) + "]");
 

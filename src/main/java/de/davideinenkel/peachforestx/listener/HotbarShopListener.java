@@ -3,8 +3,11 @@ package de.davideinenkel.peachforestx.listener;
 import de.davideinenkel.peachforestx.ExampleGui;
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
+import eu.decentsoftware.holograms.api.DHAPI;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,6 +53,9 @@ public class HotbarShopListener implements Listener {
                 container.get(key, PersistentDataType.STRING)
         )) {
             e.getClickedBlock().setType(Material.AIR);
+
+            p.playSound(p.getLocation(), Sound.UI_LOOM_TAKE_RESULT, 10, 1);
+
             if(DeathRespawnListener.items.containsKey(e.getPlayer())){
                 //e.getPlayer().getInventory().clear();
                 for(ItemStack stack : DeathRespawnListener.items.get(e.getPlayer())){
@@ -62,6 +68,10 @@ public class HotbarShopListener implements Listener {
 
                 DeathRespawnListener.items.remove(e.getPlayer());
             }
+
+            Location chestLoc = e.getClickedBlock().getLocation();
+            String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
+            DHAPI.removeHologram(deathHoloID);
             return;
         }
         else {
