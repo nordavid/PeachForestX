@@ -17,6 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -25,7 +26,8 @@ import java.util.HashMap;
 
 public final class PeachForestX extends JavaPlugin {
 
-    public static ArrayList<Location> deathChests = new ArrayList<>();
+    public static ArrayList<Location> deathChestsOld = new ArrayList<>();
+    public static HashMap<Location , String> deathChests = new HashMap<>();
 
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
     private static FileConfiguration config;
@@ -64,6 +66,7 @@ public final class PeachForestX extends JavaPlugin {
             DHAPI.removeHologram(deathHoloID);
 
             Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
+            deathChests.remove(loc);
         }
     }
 

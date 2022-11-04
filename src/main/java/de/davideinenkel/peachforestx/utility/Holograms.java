@@ -9,10 +9,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Holograms {
-    public static void addDeathHolo(Location loc, Player player) {
+    public static String addDeathHolo(Location loc, Player player) {
         String deathHoloID = getHoloIdFromLocation(loc);
+        Location holoLoc = loc.clone();
         List<String> lines = Arrays.asList("R.I.P.", player.getDisplayName());
-        Hologram hologram = DHAPI.createHologram(deathHoloID, loc.add(0.5, 1.5, 0.5), lines);
+        Hologram hologram = DHAPI.createHologram(deathHoloID, holoLoc.add(0.5, 1.5, 0.5), lines);
+
+        return hologram.getName();
     }
 
     public static void removeDeathHolo(Location loc) {

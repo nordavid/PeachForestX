@@ -75,8 +75,10 @@ public class HotbarShopListener implements Listener {
             p.playSound(p.getLocation(), Sound.UI_LOOM_TAKE_RESULT, 10, 1);
 
             // Remove hologram
-            Location chestLoc = e.getClickedBlock().getLocation();
-            Holograms.removeDeathHolo(chestLoc);
+            NamespacedKey holoKey = new NamespacedKey(PeachForestX.getInstance(), "death-chest-holo");
+            DHAPI.removeHologram(container.get(holoKey, PersistentDataType.STRING));
+            // TODO: Remove from deathchests array
+            PeachForestX.deathChests.remove(e.getClickedBlock().getLocation());
             return;
         }
         else {

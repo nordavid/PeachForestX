@@ -40,7 +40,6 @@ public class DeathRespawnListener implements Listener {
         Location deathLoc = e.getEntity().getLocation();
         Location chestLoc = player.getWorld().getBlockAt(deathLoc).getLocation();
 
-
         //Store player inventory in map
         ItemStack[] content = e.getEntity().getInventory().getContents();
         items.put(e.getEntity(), content);
@@ -48,25 +47,33 @@ public class DeathRespawnListener implements Listener {
 
         // remove Menu on player death
         //e.getDrops().remove(MenuItem.getMenuItem(player));
+
         // Remove all drops on death
         e.getDrops().clear();
 
-        player.getWorld().getBlockAt(deathLoc).setType(Material.CHEST);
+        player.sendMessage("0: " + chestLoc);
+        player.getWorld().getBlockAt(chestLoc).setType(Material.CHEST);
+
+        // Place hologram
+        String holoName = Holograms.addDeathHolo(chestLoc, player);
+
+        // Add location and holoid to hashmap
+        PeachForestX.deathChests.put(chestLoc, holoName);
 
         if(!(player.getWorld().getBlockAt(deathLoc).getType() == Material.CHEST)) return;
         if(!(player.getWorld().getBlockAt(deathLoc).getState() instanceof TileState)) return;
 
+        // Update chest state and pdc
         TileState state = (TileState) player.getWorld().getBlockAt(deathLoc).getState();
         PersistentDataContainer container = state.getPersistentDataContainer();
+
         NamespacedKey key = new NamespacedKey(PeachForestX.getInstance(), "death-chest");
+        NamespacedKey holoKey = new NamespacedKey(PeachForestX.getInstance(), "death-chest-holo");
+
         container.set(key, PersistentDataType.STRING, player.getUniqueId().toString());
+        container.set(holoKey, PersistentDataType.STRING, holoName);
 
         state.update();
-
-        PeachForestX.deathChests.add(deathLoc);
-
-        //Set hologram
-        Holograms.addDeathHolo(chestLoc, player);
 
         Chat.sendMsgWithDefaultPrefix(player, "Todestruhe platziert [" + Math.floor(deathLoc.getX()) + ", " + Math.floor(deathLoc.getY()) + ", " + Math.floor(deathLoc.getZ()) + "]", "§7");
     }
