@@ -1,6 +1,7 @@
 package de.davideinenkel.peachforestx.commands;
 
 import de.davideinenkel.peachforestx.PeachForestX;
+import de.davideinenkel.peachforestx.utility.Chat;
 import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,7 +28,7 @@ public class TestCommand implements CommandExecutor {
                 DHAPI.removeHologram(deathHoloID);
 
                 Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
-                player.sendMessage("hooond");
+                Chat.sendMsgWithDefaultPrefix(player, "Todestruhen entfernt");
             }
             return true;
         }

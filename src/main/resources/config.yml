@@ -1,5 +1,19 @@
+# PeachForestX
+# By David Einenkel
+#
+# Prefix for generel messages sent from the plugin
+Prefix: §7[§6PF§7]
+# Set how the player text will be formatted
+ChatFormat: "§7%s §r: %s"
+#
+#
+# Reward balancing
 Reward: 300
+RewardPerMin: 1
 RewardCooldownHours: 3
+#
+#
+# Shop setup
 Shop:
   Items:
     kokaina:
