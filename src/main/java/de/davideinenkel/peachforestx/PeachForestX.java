@@ -9,12 +9,16 @@ import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
 import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
+import de.davideinenkel.peachforestx.utility.Chat;
+import de.davideinenkel.peachforestx.utility.Rewards;
+import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,13 +50,20 @@ public final class PeachForestX extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+
+        Rewards.runRewardScheduler();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        for (Location loc : deathChests) {
-            Bukkit.getWorld("ambient").getBlockAt(loc).setType(Material.AIR);
+        for (Location loc: deathChests) {
+
+            Location chestLoc = Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).getLocation();
+            String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
+            DHAPI.removeHologram(deathHoloID);
+
+            Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
         }
     }
 

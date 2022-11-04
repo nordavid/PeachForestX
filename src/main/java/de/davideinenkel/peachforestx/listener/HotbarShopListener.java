@@ -2,6 +2,8 @@ package de.davideinenkel.peachforestx.listener;
 
 import de.davideinenkel.peachforestx.ExampleGui;
 import de.davideinenkel.peachforestx.PeachForestX;
+import de.davideinenkel.peachforestx.utility.Chat;
+import de.davideinenkel.peachforestx.utility.Holograms;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Location;
@@ -52,10 +54,10 @@ public class HotbarShopListener implements Listener {
         if(e.getPlayer().getUniqueId().toString().equalsIgnoreCase(
                 container.get(key, PersistentDataType.STRING)
         )) {
+            // Remove chest
             e.getClickedBlock().setType(Material.AIR);
 
-            p.playSound(p.getLocation(), Sound.UI_LOOM_TAKE_RESULT, 10, 1);
-
+            // Give players items
             if(DeathRespawnListener.items.containsKey(e.getPlayer())){
                 //e.getPlayer().getInventory().clear();
                 for(ItemStack stack : DeathRespawnListener.items.get(e.getPlayer())){
@@ -69,14 +71,17 @@ public class HotbarShopListener implements Listener {
                 DeathRespawnListener.items.remove(e.getPlayer());
             }
 
+            // Play sound to player
+            p.playSound(p.getLocation(), Sound.UI_LOOM_TAKE_RESULT, 10, 1);
+
+            // Remove hologram
             Location chestLoc = e.getClickedBlock().getLocation();
-            String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
-            DHAPI.removeHologram(deathHoloID);
+            Holograms.removeDeathHolo(chestLoc);
             return;
         }
         else {
             e.setCancelled(true);
-            e.getPlayer().sendMessage("neeeeee");
+            Chat.sendMsgWithDefaultPrefix(p, "Geh mal weg", true);
         }
     }
 

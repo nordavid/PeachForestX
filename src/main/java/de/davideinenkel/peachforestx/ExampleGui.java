@@ -2,6 +2,7 @@ package de.davideinenkel.peachforestx;
 
 import de.davideinenkel.peachforestx.menusystem.menus.KillPlayerMenu;
 import de.davideinenkel.peachforestx.menusystem.menus.ShopMenu;
+import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import de.davideinenkel.peachforestx.utility.CustomHead;
 import de.davideinenkel.peachforestx.utility.Rewards;
@@ -124,7 +125,6 @@ public class ExampleGui implements Listener {
 
         if(e.getClick() == ClickType.SWAP_OFFHAND) {
             e.setCancelled(true);
-            e.getWhoClicked().sendMessage("xD");
         }
 
         e.setCancelled(true);
@@ -145,11 +145,11 @@ public class ExampleGui implements Listener {
                if (Rewards.getIsRewardReady(p)) {
                    Rewards.claimReward(p);
                    p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 10, 1);
-                   p.sendMessage("Reward erhalten");
+                   Chat.sendMsgWithDefaultPrefix(p, "Reward erhalten");
                    updateGui();
                }
                else {
-                   p.sendMessage("Nee nee");
+                   Chat.sendMsgWithDefaultPrefix(p, "Reward nicht ready");
                }
             } else if (e.getRawSlot() == 8) {
                 new ShopMenu(PeachForestX.getPlayerMenuUtility(p)).open();

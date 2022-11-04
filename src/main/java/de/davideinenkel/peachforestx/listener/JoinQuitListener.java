@@ -1,5 +1,6 @@
 package de.davideinenkel.peachforestx.listener;
 
+import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 
@@ -29,7 +30,7 @@ public class JoinQuitListener implements Listener {
 
         if(lastTimeOn == null) {
             // first join
-            event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da. Bitte geh nie wieder");
+            event.setJoinMessage(PeachForestX.getMainConfig().getString("Prefix") + " §7Der Huan " + player.getDisplayName() + " ist da. Bitte geh nie wieder");
             return;
         }
 
@@ -39,11 +40,11 @@ public class JoinQuitListener implements Listener {
         long hours = ChronoUnit.HOURS.between(lastDateTime, current);
 
         if(hours == 0) {
-            event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da");
+            event.setJoinMessage(PeachForestX.getMainConfig().getString("Prefix") + " §7Der Huan " + player.getDisplayName() + " ist da");
             return;
         }
 
-        event.setJoinMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "Der Huan " + player.getDisplayName() + " ist da [Letztes mal on vor: " + hours + "h]");
+        event.setJoinMessage(PeachForestX.getMainConfig().getString("Prefix") + " §7Der Huan " + player.getDisplayName() + " ist da (Letztes mal on vor: " + hours + "h)");
     }
 
     @EventHandler

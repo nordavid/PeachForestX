@@ -1,7 +1,9 @@
 package de.davideinenkel.peachforestx.utility;
 
 import de.davideinenkel.peachforestx.PeachForestX;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -59,6 +61,20 @@ public class Rewards {
         PlayerConfig.get().set("lastReward", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
         PlayerConfig.save();
         return true;
+    }
+
+    public static void runRewardScheduler() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                //your action to do every minute
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    PlayerConfig.load(p);
+                    PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") + PeachForestX.getMainConfig().getInt("RewardPerMin"));
+                    PlayerConfig.save();
+                }
+            }
+        }.runTaskTimer(PeachForestX.getInstance(),0,20*60);
     }
 
 }

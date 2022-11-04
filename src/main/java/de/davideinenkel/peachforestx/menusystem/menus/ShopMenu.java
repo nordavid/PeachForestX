@@ -4,6 +4,7 @@ import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.data.ShopItem;
 import de.davideinenkel.peachforestx.menusystem.PaginatedMenu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
+import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -53,7 +54,7 @@ public class ShopMenu extends PaginatedMenu {
                 PlayerConfig.save();
 
                 p.getInventory().addItem(new ItemStack(clickedShopItem.getType(), clickedShopItem.getAmount()));
-                p.sendMessage(cost + "P abgebucht");
+                Chat.sendMsgWithDefaultPrefix(p, cost + "P abgebucht");
                 super.open();
             }
         }
@@ -66,7 +67,7 @@ public class ShopMenu extends PaginatedMenu {
         else if(e.getCurrentItem().getType().equals(Material.PLAYER_HEAD)){
             if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")){
                 if (page == 0){
-                    p.sendMessage(ChatColor.GRAY + "You are already on the first page.");
+                    Chat.sendMsgWithDefaultPrefix(p, "Du bist breits auf der ersten Seite", "§7");
                 }else{
                     page = page - 1;
                     super.open();
@@ -76,7 +77,7 @@ public class ShopMenu extends PaginatedMenu {
                     page = page + 1;
                     super.open();
                 }else{
-                    p.sendMessage(ChatColor.GRAY + "You are on the last page.");
+                    Chat.sendMsgWithDefaultPrefix(p, "Du bist auf der letzten Seite", "§7");
                 }
             }
         }
