@@ -44,6 +44,12 @@ public class ManipulateBalanceCommand implements CommandExecutor {
                 PlayerConfig.load(target);
                 PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") - amount);
                 PlayerConfig.save();
+            } else if (args[1].equalsIgnoreCase("get")) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    PlayerConfig.load(target);
+                   player.sendMessage(target.getDisplayName() + "´s Balance: " + PlayerConfig.get().getInt("balance"));
+                }
             }
         }
         return true;
