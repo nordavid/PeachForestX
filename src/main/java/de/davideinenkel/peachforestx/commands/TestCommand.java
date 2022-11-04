@@ -11,7 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Iterator;
+import java.util.Map;
 
 public class TestCommand implements CommandExecutor {
 
@@ -22,20 +22,15 @@ public class TestCommand implements CommandExecutor {
             //player.getInventory().remove(Material.PLAYER_HEAD);
             //player.getInventory().setItem(8, null);
 
-            Iterator<Location> i = PeachForestX.deathChests.iterator();
-            while (i.hasNext()) {
-                Location loc = i.next(); // must be called before you can call i.remove()
+            for (Map.Entry<Location, String> entry : PeachForestX.deathChests.entrySet()) {
+                Location loc = entry.getKey();
+                String id = entry.getValue();
 
-                //Location chestLoc = Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).getLocation();
-                //String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
-                //DHAPI.removeHologram(deathHoloID);
-                player.sendMessage("1: " +loc);
-                //Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.GLASS);
-                player.getWorld().getBlockAt(loc).setType(Material.RED_STAINED_GLASS);
+                Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
+                DHAPI.removeHologram(id);
                 Chat.sendMsgWithDefaultPrefix(player, "Todestruhen entfernt");
-
-                i.remove();
             }
+            PeachForestX.deathChests.clear();
 
             return true;
         }

@@ -51,7 +51,6 @@ public class DeathRespawnListener implements Listener {
         // Remove all drops on death
         e.getDrops().clear();
 
-        player.sendMessage("0: " + chestLoc);
         player.getWorld().getBlockAt(chestLoc).setType(Material.CHEST);
 
         // Place hologram
