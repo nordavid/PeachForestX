@@ -23,6 +23,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public final class PeachForestX extends JavaPlugin {
 
@@ -59,15 +60,14 @@ public final class PeachForestX extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        for (Location loc: deathChests) {
-
-            Location chestLoc = Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).getLocation();
-            String deathHoloID = "DeathHoloID" + chestLoc.getBlockX() + chestLoc.getBlockY() + chestLoc.getBlockZ();
-            DHAPI.removeHologram(deathHoloID);
+        for (Map.Entry<Location, String> entry : deathChests.entrySet()) {
+            Location loc = entry.getKey();
+            String id = entry.getValue();
 
             Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
-            deathChests.remove(loc);
+            DHAPI.removeHologram(id);
         }
+        deathChests.clear();
     }
 
     //Provide a player and return a menu system for that player
