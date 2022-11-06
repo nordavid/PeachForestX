@@ -1,13 +1,10 @@
 package de.davideinenkel.peachforestx.listener;
 
-import de.davideinenkel.peachforestx.ExampleGui;
 import de.davideinenkel.peachforestx.PeachForestX;
+import de.davideinenkel.peachforestx.menusystem.menus.MainMenu;
 import de.davideinenkel.peachforestx.menusystem.menus.PlayerCompassMenu;
 import de.davideinenkel.peachforestx.utility.Chat;
-import de.davideinenkel.peachforestx.utility.Holograms;
-import de.davideinenkel.peachforestx.utility.MenuItem;
 import eu.decentsoftware.holograms.api.DHAPI;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -21,7 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -35,8 +31,7 @@ public class HotbarShopListener implements Listener {
             if(p.getInventory().getItemInMainHand().getType() == Material.PLAYER_HEAD) {
                 if (p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Menü") && p.getInventory().getHeldItemSlot() == 8) {
                     e.setCancelled(true);
-                    ExampleGui gui = new ExampleGui(p);
-                    gui.openInventory(p);
+                    new MainMenu(PeachForestX.getPlayerMenuUtility(p)).open();
                     return;
                     //p.setVelocity(new Vector(0, 64, 0));
                 }
