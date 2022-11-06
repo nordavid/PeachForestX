@@ -48,3 +48,11 @@ Shop:
         - Zweite line
       amount: 64
       cost: 64
+    magicCompass:
+      name: §eMagic Compass
+      type: COMPASS
+      lore:
+        - Erste line
+        - Zweite line
+      amount: 1
+      cost: 500

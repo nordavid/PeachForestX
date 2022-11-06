@@ -4,6 +4,7 @@ import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 
+import de.davideinenkel.peachforestx.utility.TargetTracker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,6 +50,8 @@ public class JoinQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
+        TargetTracker.targets.remove(event.getPlayer());
+
         String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 
         PlayerConfig.load(event.getPlayer());
