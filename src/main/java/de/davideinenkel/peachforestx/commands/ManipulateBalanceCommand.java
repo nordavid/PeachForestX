@@ -1,5 +1,6 @@
 package de.davideinenkel.peachforestx.commands;
 
+import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import org.bukkit.Bukkit;
@@ -48,7 +49,7 @@ public class ManipulateBalanceCommand implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     PlayerConfig.load(target);
-                   player.sendMessage(target.getDisplayName() + "´s Balance: " + PlayerConfig.get().getInt("balance"));
+                    Chat.sendMsgWithDefaultPrefix(player, target.getDisplayName() + "´s Balance: " + PlayerConfig.get().getInt("balance"));
                 }
             }
         }

@@ -53,13 +53,17 @@ public class ShopMenu extends PaginatedMenu {
                 PlayerConfig.get().set("balance", PlayerConfig.get().getInt("balance") - cost);
                 PlayerConfig.save();
 
-                p.getInventory().addItem(new ItemStack(clickedShopItem.getType(), clickedShopItem.getAmount()));
+                //p.getInventory().addItem(new ItemStack(clickedShopItem.getType(), clickedShopItem.getAmount()));
+                //p.getInventory().addItem(clickedShopItem);
+                p.getInventory().addItem(makeItem(clickedShopItem.getType(), "§r" + displayName.split("\\[")[0].trim(), clickedShopItem.getAmount()));
                 Chat.sendMsgWithDefaultPrefix(p, cost + "P abgebucht");
                 super.open();
             }
+            else {
+                Chat.sendMsgWithDefaultPrefix(p, "Nicht genug Peaches", true);
+            }
         }
         else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
-
             //close inventory
             p.closeInventory();
 

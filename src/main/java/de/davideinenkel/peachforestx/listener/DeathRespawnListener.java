@@ -4,13 +4,16 @@ import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.Holograms;
 import de.davideinenkel.peachforestx.utility.MenuItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -19,6 +22,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class DeathRespawnListener implements Listener {
 
@@ -26,6 +30,19 @@ public class DeathRespawnListener implements Listener {
 
     @EventHandler public void onMsg(AsyncPlayerChatEvent e) {
         e.setFormat(PeachForestX.getMainConfig().getString("ChatFormat"));
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent e) {
+        Iterator<Block> i = e.blockList().iterator();
+        while (i.hasNext()) {
+            Block block = i.next();
+
+            if (block.getType() == Material.CHEST) {
+                // Ignore chest on explosions
+                i.remove();
+            }
+        }
     }
 
     @EventHandler
@@ -37,6 +54,14 @@ public class DeathRespawnListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
+
+        if(items.containsKey(player)) {
+            // remove Menu on player death
+            e.getDrops().remove(MenuItem.getMenuItem(player));
+            Chat.sendMsgWithDefaultPrefix(player, "Nehme zuerst deine existierende Todestruhe auf, bevor eine neue gespawnt werden kann!", true);
+            return;
+        }
+
         Location deathLoc = e.getEntity().getLocation();
         Location chestLoc = player.getWorld().getBlockAt(deathLoc).getLocation();
 
@@ -44,9 +69,6 @@ public class DeathRespawnListener implements Listener {
         ItemStack[] content = e.getEntity().getInventory().getContents();
         items.put(e.getEntity(), content);
         e.getEntity().getInventory().clear();
-
-        // remove Menu on player death
-        //e.getDrops().remove(MenuItem.getMenuItem(player));
 
         // Remove all drops on death
         e.getDrops().clear();

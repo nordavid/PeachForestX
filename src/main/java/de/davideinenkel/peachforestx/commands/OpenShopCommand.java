@@ -2,6 +2,7 @@ package de.davideinenkel.peachforestx.commands;
 
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.menusystem.menus.KillPlayerMenu;
+import de.davideinenkel.peachforestx.menusystem.menus.PlayerCompassMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,7 @@ public class OpenShopCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            new KillPlayerMenu(PeachForestX.getPlayerMenuUtility(player)).open();
+            new PlayerCompassMenu(PeachForestX.getPlayerMenuUtility(player)).open();
             return true;
         }
         return false;

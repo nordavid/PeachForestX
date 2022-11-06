@@ -2,6 +2,7 @@ package de.davideinenkel.peachforestx.listener;
 
 import de.davideinenkel.peachforestx.ExampleGui;
 import de.davideinenkel.peachforestx.PeachForestX;
+import de.davideinenkel.peachforestx.menusystem.menus.PlayerCompassMenu;
 import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.Holograms;
 import de.davideinenkel.peachforestx.utility.MenuItem;
@@ -39,6 +40,12 @@ public class HotbarShopListener implements Listener {
                     return;
                     //p.setVelocity(new Vector(0, 64, 0));
                 }
+            } else if (p.getInventory().getItemInMainHand().getType() == Material.COMPASS) {
+                if (p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Magic Compass")) {
+                    new PlayerCompassMenu(PeachForestX.getPlayerMenuUtility(p)).open();
+                    return;
+                    //p.setVelocity(new Vector(0, 64, 0));
+                }
             }
         }
 
@@ -53,7 +60,7 @@ public class HotbarShopListener implements Listener {
         //container.get(key, PersistentDataType.STRING, "death-chest");
         if(e.getPlayer().getUniqueId().toString().equalsIgnoreCase(
                 container.get(key, PersistentDataType.STRING)
-        )) {
+        ) || e.getPlayer().isOp()) {
             // Remove chest
             e.getClickedBlock().setType(Material.AIR);
 

@@ -11,6 +11,7 @@ import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.Rewards;
+import de.davideinenkel.peachforestx.utility.TargetTracker;
 import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -55,6 +56,7 @@ public final class PeachForestX extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
         Rewards.runRewardScheduler();
+        TargetTracker.runTargetScheduler();
     }
 
     @Override
