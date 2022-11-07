@@ -3,9 +3,7 @@ package de.davideinenkel.peachforestx.listener;
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.MenuItem;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
-
 import de.davideinenkel.peachforestx.utility.TargetTracker;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

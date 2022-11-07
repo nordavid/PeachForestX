@@ -1,10 +1,6 @@
 package de.davideinenkel.peachforestx.utility;
 
 import de.davideinenkel.peachforestx.PeachForestX;
-import eu.decentsoftware.holograms.api.DHAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

@@ -16,13 +16,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PeachForestX extends JavaPlugin {
-
-    public static ArrayList<Location> deathChestsOld = new ArrayList<>();
     public static HashMap<Location , String> deathChests = new HashMap<>();
 
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
