@@ -1,6 +1,7 @@
 package de.davideinenkel.peachforestx.menusystem.menus;
 
 import de.davideinenkel.peachforestx.PeachForestX;
+import de.davideinenkel.peachforestx.data.ShopCategory;
 import de.davideinenkel.peachforestx.data.ShopItem;
 import de.davideinenkel.peachforestx.menusystem.PaginatedMenu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
@@ -8,20 +9,26 @@ import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 
 public class ShopMenu extends PaginatedMenu {
 
     ArrayList<ShopItem> shopItems = new ArrayList<>();
+    ArrayList<ShopCategory> shopCategories = new ArrayList<>();
+
+    private String category = "all";
 
     public ShopMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
+        loadCategories();
         loadItems();
     }
 
@@ -42,6 +49,14 @@ public class ShopMenu extends PaginatedMenu {
         //super.open();
 
         Player p = (Player) e.getWhoClicked();
+
+
+        if (e.getRawSlot() >= 45 && e.getRawSlot() <= 50) {
+            category = e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PeachForestX.getInstance(), "category"), PersistentDataType.STRING);
+            p.sendMessage(category);
+            super.open();
+            return;
+        }
 
         if (!e.getCurrentItem().getType().equals(Material.BARRIER) && !e.getCurrentItem().getType().equals(Material.PLAYER_HEAD) && !e.getCurrentItem().getType().equals(Material.GRAY_STAINED_GLASS_PANE)) {
             ItemStack clickedShopItem = e.getCurrentItem();
@@ -91,7 +106,7 @@ public class ShopMenu extends PaginatedMenu {
     public void setMenuItems() {
 
         addMenuBorder();
-
+        setCategories();
         ///////////////////////////////////// Pagination loop template
         if(shopItems != null && !shopItems.isEmpty()) {
             for(int i = 0; i < getMaxItemsPerPage(); i++) {
@@ -99,12 +114,22 @@ public class ShopMenu extends PaginatedMenu {
                 if(index >= shopItems.size()) break;
                 if (shopItems.get(index) != null){
                     ///////////////////////////
-
-                    inventory.addItem(shopItems.get(index).item);
-
+                    if (category.equals("all")) {
+                        inventory.addItem(shopItems.get(index).item);
+                    } else if (category.equalsIgnoreCase(shopItems.get(index).category)) {
+                        inventory.addItem(shopItems.get(index).item);
+                    }
                     ////////////////////////
                 }
             }
+        }
+    }
+
+    private void setCategories() {
+        int i = 45;
+        for (ShopCategory shopCategory : shopCategories) {
+            inventory.setItem(i, shopCategory.category);
+            i++;
         }
     }
 
@@ -114,7 +139,18 @@ public class ShopMenu extends PaginatedMenu {
         ConfigurationSection shopItemsCS = config.getConfigurationSection("Shop.Items");
 
         for (String s : shopItemsCS.getKeys(false)) {
-            shopItems.add(new ShopItem(shopItemsCS.getString(s + ".name"), shopItemsCS.getString(s + ".type").toUpperCase(), shopItemsCS.getStringList(s + ".lore"), shopItemsCS.getInt(s + ".amount"), shopItemsCS.getInt(s + ".cost")));
+            shopItems.add(new ShopItem(shopItemsCS.getString(s + ".name"), shopItemsCS.getString(s + ".type").toUpperCase(), shopItemsCS.getStringList(s + ".lore"), shopItemsCS.getInt(s + ".amount"), shopItemsCS.getInt(s + ".cost"), shopItemsCS.getString(s + ".category")));
+        }
+
+    }
+
+    private void loadCategories() {
+        FileConfiguration config = PeachForestX.getMainConfig();
+        if (config == null) return;
+        ConfigurationSection shopCategoriesCS = config.getConfigurationSection("Shop.Categories");
+
+        for (String s : shopCategoriesCS.getKeys(false)) {
+            shopCategories.add(new ShopCategory(shopCategoriesCS.getString(s + ".name"), shopCategoriesCS.getString(s + ".iconItem"), s));
         }
     }
 }

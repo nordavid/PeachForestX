@@ -11,8 +11,11 @@ public class ShopItem {
     public ItemStack item;
     public Integer cost;
 
-    public ShopItem(String name, String type, List<String> lore, Integer amount, Integer cost) {
+    public String category;
+
+    public ShopItem(String name, String type, List<String> lore, Integer amount, Integer cost, String category) {
         this.cost = cost;
+        this.category = category;
         this.item = makeShopItem(type, name, amount, lore, cost);
     }
 

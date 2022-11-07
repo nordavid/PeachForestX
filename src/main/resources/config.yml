@@ -15,15 +15,89 @@ RewardCooldownHours: 3
 #
 # Shop setup
 Shop:
+  Categories:
+    # Don't remove or rename "all", you can change name and icon
+    all:
+      name: §r§lAll Shop Items
+      iconItem: BOOKSHELF
+    # Here you can change the categories how you like, don't add more than 4!!
+    building:
+      name: §r§lBuilding Blocks
+      iconItem: GRASS_BLOCK
+    decoration:
+      name: §r§lDecoration Blocks
+      iconItem: LANTERN
+    misc:
+      name: §r§lMiscellaneous
+      iconItem: LAVA_BUCKET
+    special:
+      name: §r§d§k## §r§e§lSpecial Items §r§d§k##
+      iconItem: NETHER_STAR
   Items:
-    kokaina:
-      name: §eFeinstes Koks
-      type: SUGAR
-      lore:
-        - Erste line
-        - Zweite line
+    # Building
+    stone:
+      name: Stone
+      type: STONE
+      amount: 64
+      cost: 10
+      category: building
+    copper_block:
+      name: Copper Block
+      type: COPPER_BLOCK
+      amount: 64
+      cost: 100
+      category: building
+    dark_oak_log:
+      name: Dark Oak Log
+      type: DARK_OAK_LOG
+      amount: 64
+      cost: 10
+      category: building
+    acacia_planks:
+      name: Acacia Planks
+      type: ACACIA_PLANKS
+      amount: 64
+      cost: 10
+      category: building
+    # Deco
+    lantern:
+      name: Lantern
+      type: LANTERN
+      amount: 10
+      cost: 50
+      category: decoration
+    candle:
+      name: Candle
+      type: CANDLE
+      amount: 4
+      cost: 35
+      category: decoration
+    painting:
+      name: Painting
+      type: PAINTING
       amount: 1
-      cost: 200
+      cost: 69
+      category: decoration
+    # Misc
+    beacon:
+      name: Beacon
+      type: BEACON
+      amount: 1
+      cost: 350
+      category: misc
+    ender_pearl:
+      name: Ender Pearl
+      type: ENDER_PEARL
+      amount: 16
+      cost: 125
+      category: misc
+    writable_book:
+      name: Writable Book
+      type: WRITABLE_BOOK
+      amount: 1
+      cost: 30
+      category: misc
+    # Special
     fly:
       name: §eFlügels AMK
       type: ELYTRA
@@ -32,6 +106,7 @@ Shop:
         - Zweite dx
       amount: 1
       cost: 1000
+      category: special
     firework:
       name: §eBooster
       type: FIREWORK_ROCKET
@@ -40,7 +115,8 @@ Shop:
         - Zweite line
       amount: 1
       cost: 1
-    fireworkL:
+      category: special
+    firework64:
       name: §eBooster
       type: FIREWORK_ROCKET
       lore:
@@ -48,6 +124,7 @@ Shop:
         - Zweite line
       amount: 64
       cost: 64
+      category: special
     magicCompass:
       name: §eMagic Compass
       type: COMPASS
@@ -56,3 +133,4 @@ Shop:
         - Zweite line
       amount: 1
       cost: 500
+      category: special
