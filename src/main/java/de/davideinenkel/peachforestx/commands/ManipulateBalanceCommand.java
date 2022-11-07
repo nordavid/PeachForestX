@@ -1,7 +1,6 @@
 package de.davideinenkel.peachforestx.commands;
 
 import de.davideinenkel.peachforestx.utility.Chat;
-import de.davideinenkel.peachforestx.utility.MenuItem;
 import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
