@@ -1,7 +1,6 @@
 package de.davideinenkel.peachforestx.commands;
 
 import de.davideinenkel.peachforestx.PeachForestX;
-import de.davideinenkel.peachforestx.menusystem.menus.KillPlayerMenu;
 import de.davideinenkel.peachforestx.menusystem.menus.PlayerCompassMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

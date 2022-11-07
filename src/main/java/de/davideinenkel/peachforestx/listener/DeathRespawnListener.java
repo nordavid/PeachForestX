@@ -4,7 +4,6 @@ import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.Holograms;
 import de.davideinenkel.peachforestx.utility.MenuItem;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

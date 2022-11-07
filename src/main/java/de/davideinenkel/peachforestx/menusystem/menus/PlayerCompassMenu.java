@@ -4,7 +4,6 @@ import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.menusystem.PaginatedMenu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import de.davideinenkel.peachforestx.utility.Chat;
-import de.davideinenkel.peachforestx.utility.PlayerConfig;
 import de.davideinenkel.peachforestx.utility.TargetTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
