@@ -6,6 +6,9 @@ import eu.decentsoftware.holograms.api.DHAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,16 +25,24 @@ public class TestCommand implements CommandExecutor {
             //player.getInventory().remove(Material.PLAYER_HEAD);
             //player.getInventory().setItem(8, null);
 
-            for (Map.Entry<Location, String> entry : PeachForestX.deathChests.entrySet()) {
-                Location loc = entry.getKey();
-                String id = entry.getValue();
+            if(args.length == 2) {
+                if(args[0].equalsIgnoreCase("bb")) {
+                    BossBar bb = Bukkit.createBossBar(args[1], BarColor.PINK, BarStyle.SOLID);
 
-                Bukkit.getServer().getWorlds().get(0).getBlockAt(loc).setType(Material.AIR);
-                DHAPI.removeHologram(id);
-                Chat.sendMsgWithDefaultPrefix(player, "Todestruhen entfernt");
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        bb.addPlayer(p);
+                    }
+                }
             }
-            PeachForestX.deathChests.clear();
 
+            if(args.length == 3) {
+                Player target = Bukkit.getPlayerExact(args[0]);
+                if(target == null) return false;
+
+                if(args[1].equalsIgnoreCase("dn")) {
+                    target.setDisplayName(args[2]);
+                }
+            }
             return true;
         }
         return false;
