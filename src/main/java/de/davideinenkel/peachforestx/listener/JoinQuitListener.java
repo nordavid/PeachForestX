@@ -62,5 +62,8 @@ public class JoinQuitListener implements Listener {
         if(event.getPlayer().getUniqueId().equals(nordavid)) {
             event.setQuitMessage("");
         }
+        else {
+            event.setQuitMessage(PeachForestX.getMainConfig().getString("Prefix") + "§7Ciao " + event.getPlayer().getDisplayName());
+        }
     }
 }
