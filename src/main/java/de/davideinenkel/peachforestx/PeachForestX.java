@@ -1,15 +1,11 @@
 package de.davideinenkel.peachforestx;
 
-import de.davideinenkel.peachforestx.commands.GetMenuCommand;
-import de.davideinenkel.peachforestx.commands.ManipulateBalanceCommand;
-import de.davideinenkel.peachforestx.commands.OpenShopCommand;
-import de.davideinenkel.peachforestx.commands.TestCommand;
+import de.davideinenkel.peachforestx.commands.*;
 import de.davideinenkel.peachforestx.listener.DeathRespawnListener;
 import de.davideinenkel.peachforestx.listener.HotbarShopListener;
 import de.davideinenkel.peachforestx.listener.JoinQuitListener;
 import de.davideinenkel.peachforestx.listener.MenuListener;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
-import de.davideinenkel.peachforestx.utility.Chat;
 import de.davideinenkel.peachforestx.utility.Rewards;
 import de.davideinenkel.peachforestx.utility.TargetTracker;
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -18,24 +14,17 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PeachForestX extends JavaPlugin {
-
-    public static ArrayList<Location> deathChestsOld = new ArrayList<>();
     public static HashMap<Location , String> deathChests = new HashMap<>();
 
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
     private static FileConfiguration config;
-
     private static JavaPlugin instance = null;
-
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
 
     @Override
@@ -46,6 +35,7 @@ public final class PeachForestX extends JavaPlugin {
         saveDefaultConfig();
         config = getConfig();
 
+        getCommand("pfreload").setExecutor(new ReloadConfigCommand());
         getCommand("test").setExecutor(new TestCommand());
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
@@ -88,6 +78,10 @@ public final class PeachForestX extends JavaPlugin {
         }
     }
 
+    public static void reloadMainConfig() {
+        instance.saveConfig();
+        config = instance.getConfig();
+    }
 
     public static JavaPlugin getInstance() {
         return instance;
