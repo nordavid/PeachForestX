@@ -13,7 +13,10 @@ public class ShopItem {
 
     public String category;
 
+    public String name;
+
     public ShopItem(String name, String type, List<String> lore, Integer amount, Integer cost, String category) {
+        this.name = name;
         this.cost = cost;
         this.category = category;
         this.item = makeShopItem(type, name, amount, lore, cost);

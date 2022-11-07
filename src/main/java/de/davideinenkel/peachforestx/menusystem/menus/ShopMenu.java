@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ShopMenu extends PaginatedMenu {
 
@@ -53,7 +54,6 @@ public class ShopMenu extends PaginatedMenu {
 
         if (e.getRawSlot() >= 45 && e.getRawSlot() <= 50) {
             category = e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PeachForestX.getInstance(), "category"), PersistentDataType.STRING);
-            p.sendMessage(category);
             super.open();
             return;
         }
@@ -141,7 +141,7 @@ public class ShopMenu extends PaginatedMenu {
         for (String s : shopItemsCS.getKeys(false)) {
             shopItems.add(new ShopItem(shopItemsCS.getString(s + ".name"), shopItemsCS.getString(s + ".type").toUpperCase(), shopItemsCS.getStringList(s + ".lore"), shopItemsCS.getInt(s + ".amount"), shopItemsCS.getInt(s + ".cost"), shopItemsCS.getString(s + ".category")));
         }
-
+        Collections.sort(shopItems, (o1, o2) -> o1.name.compareTo(o2.name));
     }
 
     private void loadCategories() {
