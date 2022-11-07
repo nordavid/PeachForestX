@@ -3,6 +3,8 @@ version: '${project.version}'
 main: de.davideinenkel.peachforestx.PeachForestX
 api-version: 1.19
 commands:
+  pfreload:
+    description: Reload config
   test:
     description: Variable test command
   balance:
