@@ -34,7 +34,8 @@ public abstract class PaginatedMenu extends Menu {
         ItemStack left = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/ad73cf66d31b83cd8b8644c15958c1b73c8d97323b801170c1d8864bb6a846d");
         ItemStack right = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/c86185b1d519ade585f184c34f3f3e20bb641deb879e81378e4eaf209287");
 
-        inventory.setItem(45, makeItem(Material.BARRIER, ChatColor.RED + "Close"));
+        inventory.setItem(50, super.FILLER_GLASS);
+        inventory.setItem(51, makeItem(Material.BARRIER, ChatColor.RED + "Close"));
         inventory.setItem(52, addMetaToItem(left, ChatColor.GREEN + "Previous Page"));
         inventory.setItem(53, addMetaToItem(right, ChatColor.GREEN + "Next Page"));
 
