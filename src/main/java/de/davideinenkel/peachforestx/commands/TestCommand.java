@@ -27,6 +27,7 @@ public class TestCommand implements CommandExecutor {
 
             if(args.length == 2) {
                 if(args[0].equalsIgnoreCase("bb")) {
+                    // create bossbar
                     BossBar bb = Bukkit.createBossBar(args[1], BarColor.PINK, BarStyle.SOLID);
 
                     for (Player p : Bukkit.getOnlinePlayers()) {
