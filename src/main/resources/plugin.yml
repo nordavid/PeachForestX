@@ -13,3 +13,5 @@ commands:
     description: Hehehe du Huan
   setup:
     description: Menu bekommen kla
+  acceptTradeRequest:
+  declineTradeRequest:
