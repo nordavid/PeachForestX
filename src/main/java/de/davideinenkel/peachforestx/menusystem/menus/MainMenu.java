@@ -50,6 +50,8 @@ public class MainMenu extends Menu {
                 }
             } else if (e.getRawSlot() == 8) {
                 new ShopMenu(PeachForestX.getPlayerMenuUtility(p)).open();
+            } else if (e.getRawSlot() == 7) {
+                new TradingRequestMenu(PeachForestX.getPlayerMenuUtility(p)).open();
             }
         }
     }
@@ -59,21 +61,23 @@ public class MainMenu extends Menu {
         ItemStack peach = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/16b4d27bc1b466e3ab4123cbe241974a813573a7c36c5e5b8daf9c85a5ce0");
         ItemStack reward = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6");
         ItemStack shop = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/34ccb52750e97e830aebfa8a21d5da0d364d0fdad9fb0cc220fe2ca8411842c3");
+        ItemStack trade = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/ce1fac3d96346e622e890f76ec015a709b673422257b1442061a3aa325982411");
 
         peach = addMetaToItem(peach, ChatColor.GOLD + "" + ChatColor.BOLD + "Peaches", "§fDu Drecksau hast " + balance + " Peaches");
         reward = addMetaToItem(reward, ChatColor.GREEN + "" + ChatColor.BOLD + "Reward abholen", "§fHol Dir dein daily reward ab Du Huan" , "§d" + Rewards.getRewardString(playerMenuUtility.getOwner()));
         shop = addMetaToItem(shop,ChatColor.RED + "" + ChatColor.BOLD + "Shop", "§fHol Dir doch was feines lul");
+        trade = addMetaToItem(trade, ChatColor.GOLD + "" + ChatColor.BOLD + "Trading", "Trade with other players");
 
         inventory.setItem(0, peach);
         inventory.setItem(4, reward);
         inventory.setItem(8, shop);
+        inventory.setItem(7, trade);
 
         inventory.setItem(1, FILLER_GLASS);
         inventory.setItem(2, FILLER_GLASS);
         inventory.setItem(3, FILLER_GLASS);
         inventory.setItem(5, FILLER_GLASS);
         inventory.setItem(6, FILLER_GLASS);
-        inventory.setItem(7, FILLER_GLASS);
         //inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
     }
 }

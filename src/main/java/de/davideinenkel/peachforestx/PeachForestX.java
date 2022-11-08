@@ -40,10 +40,13 @@ public final class PeachForestX extends JavaPlugin {
         getCommand("shop").setExecutor(new OpenShopCommand());
         getCommand("setup").setExecutor(new GetMenuCommand());
         getCommand("balance").setExecutor(new ManipulateBalanceCommand());
+        getCommand("acceptTradeRequest").setExecutor(new AcceptTradeRequestCommand());
+        getCommand("declineTradeRequest").setExecutor(new DeclineTradeRequestCommand());
         getServer().getPluginManager().registerEvents(new JoinQuitListener(), this);
         getServer().getPluginManager().registerEvents(new DeathRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+
 
         Rewards.runRewardScheduler();
         TargetTracker.runTargetScheduler();
