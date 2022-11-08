@@ -1,6 +1,7 @@
 package de.davideinenkel.peachforestx;
 
 import de.davideinenkel.peachforestx.commands.*;
+import de.davideinenkel.peachforestx.data.PlayerData;
 import de.davideinenkel.peachforestx.listener.*;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import de.davideinenkel.peachforestx.utility.Rewards;
@@ -17,12 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PeachForestX extends JavaPlugin {
-    public static HashMap<Location , String> deathChests = new HashMap<>();
-
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
     public static FileConfiguration config;
     private static JavaPlugin instance = null;
+
+    // Data
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    public static HashMap<Location , String> deathChests = new HashMap<>();
+    public static HashMap<Player, PlayerData> playerData = new HashMap<>();
 
     @Override
     public void onEnable() {

@@ -31,14 +31,6 @@ public class PlayerConfig {
         config = YamlConfiguration.loadConfiguration(cfile);
     }
 
-    public static File getfolder() {
-        return folder;
-    }
-
-    public static File getfile() {
-        return cfile;
-    }
-
     public static void load(Player p) {
         cfile = new File(df, subFolderName + File.separator + p.getUniqueId() + ".yml");
         config = YamlConfiguration.loadConfiguration(cfile);

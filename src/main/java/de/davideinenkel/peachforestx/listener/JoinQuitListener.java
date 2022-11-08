@@ -20,8 +20,8 @@ public class JoinQuitListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         PlayerConfig.create(player);
-
         LocalDateTime current = LocalDateTime.now();
+
 
         String lastTimeOn = PlayerConfig.get().getString("lastTimeOnline");
 
