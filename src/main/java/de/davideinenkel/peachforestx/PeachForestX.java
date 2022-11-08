@@ -23,7 +23,7 @@ public final class PeachForestX extends JavaPlugin {
     public static HashMap<Location , String> deathChests = new HashMap<>();
 
     //https://blog.jeff-media.com/persistent-data-container-the-better-alternative-to-nbt-tags/
-    private static FileConfiguration config;
+    public static FileConfiguration config;
     private static JavaPlugin instance = null;
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
 
@@ -79,7 +79,8 @@ public final class PeachForestX extends JavaPlugin {
     }
 
     public static void reloadMainConfig() {
-        instance.saveConfig();
+        /*instance.saveConfig();*/
+        instance.reloadConfig();
         config = instance.getConfig();
     }
 
