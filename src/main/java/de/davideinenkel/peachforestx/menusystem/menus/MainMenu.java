@@ -50,7 +50,7 @@ public class MainMenu extends Menu {
                 }
             } else if (e.getRawSlot() == 8) {
                 new ShopMenu(PeachForestX.getPlayerMenuUtility(p)).open();
-            } else if (e.getRawSlot() == 7) {
+            } else if (e.getRawSlot() == 0) {
                 new TradingRequestMenu(PeachForestX.getPlayerMenuUtility(p)).open();
             }
         }
@@ -66,18 +66,18 @@ public class MainMenu extends Menu {
         peach = addMetaToItem(peach, ChatColor.GOLD + "" + ChatColor.BOLD + "Peaches", "§fDu Drecksau hast " + balance + " Peaches");
         reward = addMetaToItem(reward, ChatColor.GREEN + "" + ChatColor.BOLD + "Reward abholen", "§fHol Dir dein daily reward ab Du Huan" , "§d" + Rewards.getRewardString(playerMenuUtility.getOwner()));
         shop = addMetaToItem(shop,ChatColor.RED + "" + ChatColor.BOLD + "Shop", "§fHol Dir doch was feines lul");
-        trade = addMetaToItem(trade, ChatColor.GOLD + "" + ChatColor.BOLD + "Trading", "Trade with other players");
+        trade = addMetaToItem(trade, ChatColor.GOLD + "" + ChatColor.BOLD + "Trading", "§fTrade with other players");
 
-        inventory.setItem(0, peach);
+        //inventory.setItem(0, peach);
         inventory.setItem(4, reward);
         inventory.setItem(8, shop);
-        inventory.setItem(7, trade);
+        inventory.setItem(0, trade);
 
         inventory.setItem(1, FILLER_GLASS);
         inventory.setItem(2, FILLER_GLASS);
         inventory.setItem(3, FILLER_GLASS);
         inventory.setItem(5, FILLER_GLASS);
         inventory.setItem(6, FILLER_GLASS);
-        //inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore", "§bSecond line of the lore"));
+        inventory.setItem(7, FILLER_GLASS);
     }
 }

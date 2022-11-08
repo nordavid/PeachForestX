@@ -45,14 +45,14 @@ public class PlayerCompassMenu extends PaginatedMenu {
         players.remove(playerMenuUtility.getOwner());
 
         if (e.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {
-            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")){
+            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Vorherige Seite")){
                 if (page == 0){
-                    Chat.sendMsgWithDefaultPrefix(p, "Du bist breits auf der ersten Seite", "§7");
+                    Chat.sendMsgWithDefaultPrefix(p, "Du bist auf der ersten Seite", "§7");
                 }else{
                     page = page - 1;
                     super.open();
                 }
-            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")){
+            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Nächste Seite")){
                 if (!((index + 1) >= players.size())){
                     page = page + 1;
                     super.open();

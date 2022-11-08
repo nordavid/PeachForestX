@@ -47,12 +47,9 @@ public class ShopMenu extends PaginatedMenu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-        //super.open();
-
         Player p = (Player) e.getWhoClicked();
 
-
-        if (e.getRawSlot() >= 45 && e.getRawSlot() <= 50) {
+        if (e.getRawSlot() >= 45 && e.getRawSlot() <= 49) {
             category = e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PeachForestX.getInstance(), "category"), PersistentDataType.STRING);
             super.open();
             return;
@@ -84,14 +81,14 @@ public class ShopMenu extends PaginatedMenu {
 
         }
         else if(e.getCurrentItem().getType().equals(Material.PLAYER_HEAD)){
-            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")){
+            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Vorherige Seite")){
                 if (page == 0){
-                    Chat.sendMsgWithDefaultPrefix(p, "Du bist breits auf der ersten Seite", "§7");
+                    Chat.sendMsgWithDefaultPrefix(p, "Du bist auf der ersten Seite", "§7");
                 }else{
                     page = page - 1;
                     super.open();
                 }
-            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")){
+            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Nächste Seite")){
                 if (!((index + 1) >= shopItems.size())){
                     page = page + 1;
                     super.open();

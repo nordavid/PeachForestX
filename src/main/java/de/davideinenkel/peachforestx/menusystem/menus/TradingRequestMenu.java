@@ -3,6 +3,7 @@ package de.davideinenkel.peachforestx.menusystem.menus;
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.menusystem.PaginatedMenu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
+import de.davideinenkel.peachforestx.trading.TradingSystem;
 import de.davideinenkel.peachforestx.utility.Chat;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
@@ -31,7 +32,7 @@ public class TradingRequestMenu extends PaginatedMenu {
 
     @Override
     public String getMenuName() {
-        return "Select Player to trade";
+        return "Spieler zum Traden wählen";
     }
 
     @Override
@@ -47,14 +48,14 @@ public class TradingRequestMenu extends PaginatedMenu {
         players.remove(playerMenuUtility.getOwner());
 
         if (e.getCurrentItem().getType().equals(Material.PLAYER_HEAD)) {
-            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Previous Page")){
+            if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Vorherige Seite")){
                 if (page == 0){
-                    Chat.sendMsgWithDefaultPrefix(p, "Du bist breits auf der ersten Seite", "§7");
+                    Chat.sendMsgWithDefaultPrefix(p, "Du bist auf der ersten Seite", "§7");
                 }else{
                     page = page - 1;
                     super.open();
                 }
-            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Next Page")){
+            }else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Nächste Seite")){
                 if (!((index + 1) >= players.size())){
                     page = page + 1;
                     super.open();
@@ -66,6 +67,9 @@ public class TradingRequestMenu extends PaginatedMenu {
             else {
                 Player target = Bukkit.getPlayer(UUID.fromString(e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PeachForestX.getInstance(), "uuid"), PersistentDataType.STRING)));
                 if(target != null) {
+
+                    if(TradingSystem.tradeRequests.containsKey(p)) return;
+                    TradingSystem.tradeRequests.put(p, target);
                     /*BaseComponent[] targetMessage =
                             new ComponentBuilder(p.getDisplayName()).color(ChatColor.GOLD)
                                     .append(" will mit dir Traden ").color(ChatColor.WHITE)
@@ -78,14 +82,14 @@ public class TradingRequestMenu extends PaginatedMenu {
                                     .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/declineTradeRequest " + p.getDisplayName()))
                                     .create();*/
 
-                    TextComponent accept = new TextComponent("§aAnnehmen");
-                    TextComponent decline = new TextComponent("§cAblehnen");
+                    TextComponent accept = new TextComponent("§a[Annehmen]");
+                    TextComponent decline = new TextComponent("§c[Ablehnen]");
 
                     accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accepttraderequest " + p.getDisplayName()));
-                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Clicke um Anfrage anzunehmen!")));
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Klicke um Anfrage anzunehmen!")));
 
                     decline.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/declinetraderequest " + p.getDisplayName()));
-                    decline.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Clicke um Anfrage abzulehnen!")));
+                    decline.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Klicke um Anfrage abzulehnen!")));
 
                     TextComponent msg = new TextComponent(p.getDisplayName() + " will mit dir Traden. ");
                     msg.addExtra(accept);
@@ -139,7 +143,7 @@ public class TradingRequestMenu extends PaginatedMenu {
 
         List<String> lore = new ArrayList<>();
         //List<String> lore = Arrays.asList(ChatColor.GRAY + "Menü mit Rechtsklick öffnen");
-        lore.add(org.bukkit.ChatColor.GRAY + "Click to trade with this player");
+        lore.add(org.bukkit.ChatColor.GRAY + "Klicken um Trading-Anfrage zu schicken");
         //lore = ChatColor.GRAY + "Menü mit Rechtsklick öffnen";
         meta.setLore(lore);
 
