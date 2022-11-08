@@ -1,10 +1,7 @@
 package de.davideinenkel.peachforestx;
 
 import de.davideinenkel.peachforestx.commands.*;
-import de.davideinenkel.peachforestx.listener.DeathRespawnListener;
-import de.davideinenkel.peachforestx.listener.HotbarShopListener;
-import de.davideinenkel.peachforestx.listener.JoinQuitListener;
-import de.davideinenkel.peachforestx.listener.MenuListener;
+import de.davideinenkel.peachforestx.listener.*;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import de.davideinenkel.peachforestx.utility.Rewards;
 import de.davideinenkel.peachforestx.utility.TargetTracker;
@@ -44,6 +41,7 @@ public final class PeachForestX extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DeathRespawnListener(), this);
         getServer().getPluginManager().registerEvents(new HotbarShopListener(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        getServer().getPluginManager().registerEvents(new ExpListener(), this);
 
         Rewards.runRewardScheduler();
         TargetTracker.runTargetScheduler();

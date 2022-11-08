@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -26,10 +25,6 @@ import java.util.Iterator;
 public class DeathRespawnListener implements Listener {
 
     public static HashMap<Player , ItemStack[]> items = new HashMap<>();
-
-    @EventHandler public void onMsg(AsyncPlayerChatEvent e) {
-        e.setFormat(PeachForestX.getMainConfig().getString("ChatFormat"));
-    }
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
