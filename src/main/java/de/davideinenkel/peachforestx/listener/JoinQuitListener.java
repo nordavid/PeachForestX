@@ -63,7 +63,7 @@ public class JoinQuitListener implements Listener {
             event.setQuitMessage("");
         }
         else {
-            event.setQuitMessage(PeachForestX.getMainConfig().getString("Prefix") + "§7Ciao " + event.getPlayer().getDisplayName());
+            event.setQuitMessage(PeachForestX.getMainConfig().getString("Prefix") + " §7Ciao " + event.getPlayer().getDisplayName());
         }
     }
 }
