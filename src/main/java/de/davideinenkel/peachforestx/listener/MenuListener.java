@@ -22,9 +22,15 @@ public class MenuListener implements Listener {
             //Since we know our inventoryholder is a menu, get the Menu Object representing
             // the menu we clicked on
             Menu menu = (Menu) holder;
-            if(!menu.getMenuName().equalsIgnoreCase("Trading Menü")) e.setCancelled(true);
+
+            if(menu.isEventSelfManaged()) {
+                menu.handleMenu(e);
+                return;
+            }
+
+            e.setCancelled(true);
             if (e.getCurrentItem() == null) { //deal with null exceptions
-                //return;
+                return;
             }
 
             //Call the handleMenu object which takes the event and processes it

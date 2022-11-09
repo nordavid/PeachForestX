@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class TradingSystem {
+public class Trade {
     public static HashMap<Player, Player> tradeRequests = new HashMap<>();
 
     Player host;
@@ -17,7 +17,7 @@ public class TradingSystem {
 
     ItemStack[] hostItems;
     ItemStack[] targetItems;
-    public TradingSystem(Player host, Player target) {
+    public Trade(Player host, Player target) {
         this.host = host;
         this.target = target;
         hostMenu = new TradingMenu(PeachForestX.getPlayerMenuUtility(host), this);

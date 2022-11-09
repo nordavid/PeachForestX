@@ -22,6 +22,11 @@ public class MainMenu extends Menu {
     }
 
     @Override
+    public Boolean isEventSelfManaged() {
+        return false;
+    }
+
+    @Override
     public String getMenuName() {
         PlayerConfig.load(playerMenuUtility.getOwner());
         balance = PlayerConfig.get().getInt("balance");

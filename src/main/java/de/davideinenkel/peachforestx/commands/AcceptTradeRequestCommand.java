@@ -1,6 +1,6 @@
 package de.davideinenkel.peachforestx.commands;
 
-import de.davideinenkel.peachforestx.trading.TradingSystem;
+import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,13 +14,13 @@ public class AcceptTradeRequestCommand implements CommandExecutor {
         Player target = (Player) commandSender;
         Player host = Bukkit.getPlayer(args[0]);
 
-        if(TradingSystem.tradeRequests.containsKey(host) && TradingSystem.tradeRequests.get(host) == target) {
+        if(Trade.tradeRequests.containsKey(host) && Trade.tradeRequests.get(host) == target) {
             Chat.sendMsgWithDefaultPrefix(host, target.getDisplayName() + "§a hat deine Trade-Anfrage angenommen.");
             Chat.sendMsgWithDefaultPrefix(target, "§aDu hast die Trade-Anfrage angenommen.");
 
-            new TradingSystem(host, target);
+            new Trade(host, target);
 
-            TradingSystem.tradeRequests.remove(host);
+            Trade.tradeRequests.remove(host);
             return true;
         }
 

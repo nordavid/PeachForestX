@@ -1,6 +1,6 @@
 package de.davideinenkel.peachforestx.commands;
 
-import de.davideinenkel.peachforestx.trading.TradingSystem;
+import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,8 +14,8 @@ public class DeclineTradeRequestCommand implements CommandExecutor {
         Player target = (Player) commandSender;
         Player host = Bukkit.getPlayer(args[0]);
 
-        if(TradingSystem.tradeRequests.containsKey(host)) {
-            TradingSystem.tradeRequests.remove(host);
+        if(Trade.tradeRequests.containsKey(host)) {
+            Trade.tradeRequests.remove(host);
             Chat.sendMsgWithDefaultPrefix(host, target.getDisplayName() + "§c hat deine Trade-Anfrage abgelehnt.");
             Chat.sendMsgWithDefaultPrefix(target, "§cDu hast die Trade-Anfrage abgelehnt.");
             return true;
