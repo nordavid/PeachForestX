@@ -30,7 +30,7 @@ public class TradingRequestMenu extends PaginatedMenu {
 
     @Override
     public Boolean isEventSelfManaged() {
-        return true;
+        return false;
     }
 
     @Override

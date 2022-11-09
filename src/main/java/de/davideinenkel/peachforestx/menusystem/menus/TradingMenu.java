@@ -6,6 +6,7 @@ import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.CustomHead;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,8 +16,9 @@ import java.util.Arrays;
 public class TradingMenu extends Menu {
     Trade trade;
 
-
     Integer[] forbiddenSlots = {4,13,22,27,28,29,30,31,32,33,34,35,42,43,44};
+    Integer[] droppableSlots = {1,2,3,10,11,12,19,20,21};
+
     public TradingMenu(PlayerMenuUtility playerMenuUtility, Trade trade) {
         super(playerMenuUtility);
         this.trade = trade;
@@ -39,11 +41,19 @@ public class TradingMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
+        Integer clickedSlot = e.getRawSlot();
+        //if(!Arrays.stream(droppableSlots).anyMatch(i -> i == clickedSlot) || clickedSlot < getSlots()) e.setCancelled(true);
 
-        e.getWhoClicked().sendMessage("Click e " + e.getAction());
-        if(e.getAction() == InventoryAction.PLACE_ALL) e.getWhoClicked().sendMessage("yes");
-        e.getWhoClicked().sendMessage("RawSlot: " + e.getRawSlot() + " Slot: " + e.getSlot());
-        if(Arrays.stream(forbiddenSlots).anyMatch(i -> i == e.getRawSlot())) e.setCancelled(true);
+        Player player = (Player) e.getWhoClicked();
+        InventoryAction action = e.getAction();
+        // Debug
+        e.getWhoClicked().sendMessage("RawSlot: " + e.getRawSlot() + " Slot: " + e.getSlot() + " Action " + e.getAction());
+
+        if(action == InventoryAction.PLACE_ALL || action == InventoryAction.PLACE_ONE || action == InventoryAction.PLACE_SOME) {
+            player.sendMessage("HELLO????");
+            player.sendMessage("Amount: " + e.getCursor().getAmount());
+        }
+
         //tradingSystem.updateTradingMenus();
     }
 
@@ -72,5 +82,11 @@ public class TradingMenu extends Menu {
         decline = addMetaToItem(decline, ChatColor.RED + "" + ChatColor.BOLD + "Ablehnen");
         inventory.setItem(44, yes);
         inventory.setItem(43, no);
+        if(isHost()) inventory.setItem(42, yes);
+    }
+
+    private Boolean isHost() {
+        if(trade.getHost() == playerMenuUtility.getOwner()) return true;
+        return false;
     }
 }
