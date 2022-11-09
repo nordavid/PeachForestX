@@ -26,6 +26,11 @@ public class KillPlayerMenu extends PaginatedMenu {
     }
 
     @Override
+    public Boolean isEventSelfManaged() {
+        return false;
+    }
+
+    @Override
     public String getMenuName() {
         return "Choose a Player to Murder";
     }

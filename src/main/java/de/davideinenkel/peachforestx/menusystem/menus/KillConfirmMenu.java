@@ -17,6 +17,11 @@ public class KillConfirmMenu extends Menu {
     }
 
     @Override
+    public Boolean isEventSelfManaged() {
+        return false;
+    }
+
+    @Override
     public String getMenuName() {
         return "Kill " + playerMenuUtility.getPlayerToKill().getDisplayName();
     }
@@ -68,6 +73,5 @@ public class KillConfirmMenu extends Menu {
         setFillerGlass();
 
     }
-
 }
 

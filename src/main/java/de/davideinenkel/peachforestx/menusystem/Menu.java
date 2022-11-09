@@ -39,6 +39,8 @@ public abstract class Menu implements InventoryHolder {
     //let each menu decide what items are to be placed in the inventory menu
     public abstract void setMenuItems();
 
+    public abstract Boolean isEventSelfManaged();
+
     //When called, an inventory is created and opened for the player
     public void open() {
         //The owner of the inventory created is the Menu itself,

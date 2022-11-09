@@ -34,6 +34,11 @@ public class ShopMenu extends PaginatedMenu {
     }
 
     @Override
+    public Boolean isEventSelfManaged() {
+        return false;
+    }
+
+    @Override
     public String getMenuName() {
         PlayerConfig.load(playerMenuUtility.getOwner());
         Integer bal = PlayerConfig.get().getInt("balance");

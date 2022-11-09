@@ -28,6 +28,11 @@ public class PlayerCompassMenu extends PaginatedMenu {
     }
 
     @Override
+    public Boolean isEventSelfManaged() {
+        return false;
+    }
+
+    @Override
     public String getMenuName() {
         return "Magic Compass";
     }

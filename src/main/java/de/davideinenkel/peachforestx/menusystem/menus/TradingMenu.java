@@ -2,7 +2,7 @@ package de.davideinenkel.peachforestx.menusystem.menus;
 
 import de.davideinenkel.peachforestx.menusystem.Menu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
-import de.davideinenkel.peachforestx.trading.TradingSystem;
+import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.CustomHead;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,11 +13,18 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 public class TradingMenu extends Menu {
-    TradingSystem tradingSystem;
+    Trade trade;
+
+
     Integer[] forbiddenSlots = {4,13,22,27,28,29,30,31,32,33,34,35,42,43,44};
-    public TradingMenu(PlayerMenuUtility playerMenuUtility, TradingSystem tradingSystem) {
+    public TradingMenu(PlayerMenuUtility playerMenuUtility, Trade trade) {
         super(playerMenuUtility);
-        this.tradingSystem = tradingSystem;
+        this.trade = trade;
+    }
+
+    @Override
+    public Boolean isEventSelfManaged() {
+        return true;
     }
 
     @Override

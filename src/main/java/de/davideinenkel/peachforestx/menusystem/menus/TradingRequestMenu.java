@@ -3,7 +3,7 @@ package de.davideinenkel.peachforestx.menusystem.menus;
 import de.davideinenkel.peachforestx.PeachForestX;
 import de.davideinenkel.peachforestx.menusystem.PaginatedMenu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
-import de.davideinenkel.peachforestx.trading.TradingSystem;
+import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.Chat;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.ChatColor;
@@ -24,10 +24,13 @@ import java.util.UUID;
 import static org.bukkit.Bukkit.getServer;
 
 public class TradingRequestMenu extends PaginatedMenu {
-
-
     public TradingRequestMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
+    }
+
+    @Override
+    public Boolean isEventSelfManaged() {
+        return true;
     }
 
     @Override
@@ -68,8 +71,8 @@ public class TradingRequestMenu extends PaginatedMenu {
                 Player target = Bukkit.getPlayer(UUID.fromString(e.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(PeachForestX.getInstance(), "uuid"), PersistentDataType.STRING)));
                 if(target != null) {
 
-                    if(TradingSystem.tradeRequests.containsKey(p)) return;
-                    TradingSystem.tradeRequests.put(p, target);
+                    if(Trade.tradeRequests.containsKey(p)) return;
+                    Trade.tradeRequests.put(p, target);
                     /*BaseComponent[] targetMessage =
                             new ComponentBuilder(p.getDisplayName()).color(ChatColor.GOLD)
                                     .append(" will mit dir Traden ").color(ChatColor.WHITE)
