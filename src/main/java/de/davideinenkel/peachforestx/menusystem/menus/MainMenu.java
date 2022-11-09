@@ -43,7 +43,7 @@ public class MainMenu extends Menu {
         if(e.getClick() == ClickType.LEFT) {
             final Player p = (Player) e.getWhoClicked();
 
-            if(e.getRawSlot() == 4) {
+            if(e.getRawSlot() == 0) {
                 if (Rewards.getIsRewardReady(p)) {
                     Rewards.claimReward(p);
                     p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 10, 1);
@@ -53,9 +53,9 @@ public class MainMenu extends Menu {
                 else {
                     Chat.sendMsgWithDefaultPrefix(p, "Reward nicht ready");
                 }
-            } else if (e.getRawSlot() == 8) {
+            } else if (e.getRawSlot() == 4) {
                 new ShopMenu(PeachForestX.getPlayerMenuUtility(p)).open();
-            } else if (e.getRawSlot() == 0) {
+            } else if (e.getRawSlot() == 8) {
                 new TradingRequestMenu(PeachForestX.getPlayerMenuUtility(p)).open();
             }
         }
@@ -74,9 +74,9 @@ public class MainMenu extends Menu {
         trade = addMetaToItem(trade, ChatColor.GOLD + "" + ChatColor.BOLD + "Trading", "§fTrade with other players");
 
         //inventory.setItem(0, peach);
-        inventory.setItem(4, reward);
-        inventory.setItem(8, shop);
-        inventory.setItem(0, trade);
+        inventory.setItem(0, reward);
+        inventory.setItem(4, shop);
+        inventory.setItem(8, trade);
 
         inventory.setItem(1, FILLER_GLASS);
         inventory.setItem(2, FILLER_GLASS);
