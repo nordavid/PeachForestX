@@ -19,7 +19,7 @@ public class Trade {
     public enum TradeState {
         TRADING,
         LOCKED,
-        READYTOTRADE
+        TRADEACCEPTED
     }
 
     private Player host;
@@ -49,10 +49,12 @@ public class Trade {
     public Player getTarget() {return target;}
 
     public void acceptTrade(Player player) {
-        if(player == host) hostTradeState = TradeState.READYTOTRADE;
-        else targetTradeState = TradeState.READYTOTRADE;
+        if(player == host) hostTradeState = TradeState.TRADEACCEPTED;
+        else targetTradeState = TradeState.TRADEACCEPTED;
 
-        if(hostTradeState == TradeState.READYTOTRADE && targetTradeState == TradeState.READYTOTRADE) executeTrade();
+        updateTradingMenus();
+
+        if(hostTradeState == TradeState.TRADEACCEPTED && targetTradeState == TradeState.TRADEACCEPTED) executeTrade();
     }
 
     private void executeTrade() {
@@ -88,8 +90,9 @@ public class Trade {
         updateTradingMenus();
     }
 
-    public Boolean haveBothLocked() {
+    public Boolean canTradeBeAccepted() {
         if(hostTradeState == TradeState.LOCKED && targetTradeState == TradeState.LOCKED) return true;
+        if(hostTradeState == TradeState.TRADEACCEPTED || targetTradeState == TradeState.TRADEACCEPTED) return true;
         else return false;
     }
 
@@ -113,9 +116,11 @@ public class Trade {
     public void removeItem(Integer slot, ItemStack item, Type type) {
         if(type == Type.HOST) {
             hostItems.remove(slot);
+            updateTradingMenus(Type.TARGET);
         }
         if(type == Type.TARGET) {
             targetItems.remove(slot);
+            updateTradingMenus(Type.HOST);
         }
     }
 
