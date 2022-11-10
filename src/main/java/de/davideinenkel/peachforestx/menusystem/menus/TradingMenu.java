@@ -4,7 +4,6 @@ import de.davideinenkel.peachforestx.menusystem.Menu;
 import de.davideinenkel.peachforestx.menusystem.PlayerMenuUtility;
 import de.davideinenkel.peachforestx.trading.Trade;
 import de.davideinenkel.peachforestx.utility.CustomHead;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
@@ -52,11 +51,16 @@ public class TradingMenu extends Menu {
 
         Player player = (Player) e.getWhoClicked();
 
+        // Debug
+        e.getWhoClicked().sendMessage("RawSlot: " + e.getRawSlot() + " Slot: " + e.getSlot() + " Action " + e.getAction());
+        player.sendMessage("State: " + trade.getTradeStateForPlayer(menuType) + " Type: " + menuType);
+
+        // Handle interaction buttons
         if(clickedSlot == 43 && trade.getTradeStateForPlayer(menuType) == Trade.TradeState.TRADING) {
-            inventory.setItem(43, new ItemStack(Material.AIR));
+            //inventory.setItem(43, new ItemStack(Material.AIR));
             trade.lockTrade(player);
             return;
-        } else if (clickedSlot == 43 && trade.haveBothLocked()) {
+        } else if (clickedSlot == 43 && trade.canTradeBeAccepted()) {
             player.sendMessage("trraaadddding");
             trade.acceptTrade(player);
             return;
@@ -65,15 +69,13 @@ public class TradingMenu extends Menu {
             return;
         }
 
+        // Cancel trading area
         if(trade.getTradeStateForPlayer(menuType) != Trade.TradeState.TRADING) {
             e.setCancelled(true);
             return;
         }
 
         InventoryAction action = e.getAction();
-
-        // Debug
-        e.getWhoClicked().sendMessage("RawSlot: " + e.getRawSlot() + " Slot: " + e.getSlot() + " Action " + e.getAction());
 
         // TODO: Handle move to inventory (shift)
         // Place item in drop area
@@ -84,47 +86,68 @@ public class TradingMenu extends Menu {
                 trade.removeItem(clickedSlot, e.getCurrentItem(), menuType);
             }
         }
-
-        //tradingSystem.updateTradingMenus();
     }
 
     @Override
     public void setMenuItems() {
 
         addTradingGui();
-        addLockedIndicators();
-
-        //ItemStack accept = new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1);
-        //ItemStack decline = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
+        addLockIndicators();
+        addTradeItems();
+        addInteractionButtons();
 
         inventory.setItem(0, CustomHead.getPlayerHead(playerMenuUtility.getOwner(), playerMenuUtility.getOwner().getDisplayName()));
         inventory.setItem(8, CustomHead.getPlayerHead(isHost() ? trade.getTarget() : trade.getHost(), isHost() ? trade.getTarget().getDisplayName() : trade.getHost().getDisplayName()));
 
-        ItemStack peach = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/16b4d27bc1b466e3ab4123cbe241974a813573a7c36c5e5b8daf9c85a5ce0");
-        peach = addMetaToItem(peach, ChatColor.GOLD + "" + ChatColor.BOLD + "Peaches", "§fxxx");
+        ItemStack peach = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/16b4d27bc1b466e3ab4123cbe241974a813573a7c36c5e5b8daf9c85a5ce0", "§a§lPeaches", "§fxxx");
         inventory.setItem(9, peach);
         inventory.setItem(17, peach);
+    }
 
-        ItemStack clock = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/8a59084f659df462667d6ac711fc862d8cc5b0ee49bd4d50e85bb54c28a946f4");
-        clock = addMetaToItem(clock, "§7§lWarte...");
+    private void addTradingGui() {
+        for (int i = 27; i <= 35; i++) {
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, super.FILLER_GLASS);
+            }
+        }
+        inventory.setItem(4, super.FILLER_GLASS);
+        inventory.setItem(13, super.FILLER_GLASS);
+        inventory.setItem(22, super.FILLER_GLASS);
+        inventory.setItem(26, super.FILLER_GLASS);
+    }
 
-        ItemStack lock = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/c6e45d7cf4ff21732172d71b2a340626c708397626319b6d57d76c9ac48c675f");
-        lock = addMetaToItem(lock, "§a§lAngebot locken");
-        ItemStack accept = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6");
-        accept = addMetaToItem(accept, ChatColor.GREEN + "" + ChatColor.BOLD + "Angebot Annehmen");
-        ItemStack decline = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/3c4d7a3bc3de833d3032e85a0bf6f2bef7687862b3c6bc40ce731064f615dd9d");
-        decline = addMetaToItem(decline, ChatColor.RED + "" + ChatColor.BOLD + "Abbrechen");
+    private void addInteractionButtons() {
+        ItemStack clock = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/8a59084f659df462667d6ac711fc862d8cc5b0ee49bd4d50e85bb54c28a946f4", "§7§lWarte auf Trading-Partner...");
+        ItemStack lock = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/c6e45d7cf4ff21732172d71b2a340626c708397626319b6d57d76c9ac48c675f", "§a§lAngebot locken");
+        ItemStack accept = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/a92e31ffb59c90ab08fc9dc1fe26802035a3a47c42fee63423bcdb4262ecb9b6", "§a§lAngebot Annehmen");
+        ItemStack decline = CustomHead.getPlayerHead("https://textures.minecraft.net/texture/3c4d7a3bc3de833d3032e85a0bf6f2bef7687862b3c6bc40ce731064f615dd9d", "§c§lAbbrechen");
 
-        if(trade.haveBothLocked()) {
+        if (trade.getTradeStateForPlayer(menuType) == Trade.TradeState.TRADEACCEPTED) {
+            inventory.setItem(43, clock);
+        } else if(trade.canTradeBeAccepted()) {
             inventory.setItem(43, accept);
-        } else if (trade.getTradeStateForPlayer(menuType) == Trade.TradeState.READYTOTRADE) {
+        } else if (trade.getTradeStateForPlayer(menuType) == Trade.TradeState.LOCKED) {
             inventory.setItem(43, clock);
         } else if (trade.getTradeStateForPlayer(menuType) == Trade.TradeState.TRADING) {
             inventory.setItem(43, lock);
         }
 
         inventory.setItem(44, decline);
+    }
 
+    private void addLockIndicators() {
+        Trade.TradeState tradeState = trade.getTradeStateForPlayer(menuType);
+        if(tradeState == Trade.TradeState.TRADING) inventory.setItem(18, makeItem(Material.GRAY_STAINED_GLASS, ""));
+        else if (tradeState == Trade.TradeState.LOCKED) inventory.setItem(18, makeItem(Material.RED_STAINED_GLASS, ""));
+        else inventory.setItem(18, makeItem(Material.LIME_STAINED_GLASS, ""));
+
+        tradeState = trade.getTradeStateForPlayer(menuType == Trade.Type.HOST ? Trade.Type.TARGET : Trade.Type.HOST);
+        if(tradeState == Trade.TradeState.TRADING) inventory.setItem(26, makeItem(Material.GRAY_STAINED_GLASS, ""));
+        else if (tradeState == Trade.TradeState.LOCKED) inventory.setItem(26, makeItem(Material.RED_STAINED_GLASS, ""));
+        else inventory.setItem(26, makeItem(Material.LIME_STAINED_GLASS, ""));
+    }
+
+    private void addTradeItems() {
         // Place Host Items
         for(Map.Entry<Integer, ItemStack> entry : trade.getItems(Trade.Type.HOST).entrySet()) {
             Integer slot = entry.getKey();
@@ -144,29 +167,6 @@ public class TradingMenu extends Menu {
         }
     }
 
-    private void addTradingGui() {
-        for (int i = 27; i <= 35; i++) {
-            if (inventory.getItem(i) == null) {
-                inventory.setItem(i, super.FILLER_GLASS);
-            }
-        }
-        inventory.setItem(4, super.FILLER_GLASS);
-        inventory.setItem(13, super.FILLER_GLASS);
-        inventory.setItem(22, super.FILLER_GLASS);
-        inventory.setItem(42, super.FILLER_GLASS);
-        inventory.setItem(26, super.FILLER_GLASS);
-    }
-
-    private void addLockedIndicators() {
-        Trade.TradeState tradeState = trade.getTradeStateForPlayer(menuType);
-        if(tradeState == Trade.TradeState.LOCKED) inventory.setItem(18, makeItem(Material.LIME_STAINED_GLASS_PANE, ""));
-        else inventory.setItem(18, makeItem(Material.RED_STAINED_GLASS_PANE, ""));
-
-        tradeState = trade.getTradeStateForPlayer(menuType == Trade.Type.HOST ? Trade.Type.TARGET : Trade.Type.HOST);
-        if(tradeState == Trade.TradeState.LOCKED) inventory.setItem(26, makeItem(Material.LIME_STAINED_GLASS_PANE, ""));
-        else inventory.setItem(26, makeItem(Material.RED_STAINED_GLASS_PANE, ""));
-    }
-
     public Integer getInvertedSlot(Integer slot) {
         if(slot < 4) return 8 - slot;
         else if (slot < 13) return 26 - slot;
@@ -175,7 +175,6 @@ public class TradingMenu extends Menu {
     }
 
     private Boolean isHost() {
-        if(trade.getHost() == playerMenuUtility.getOwner()) return true;
-        return false;
+        return trade.getHost() == playerMenuUtility.getOwner();
     }
 }
